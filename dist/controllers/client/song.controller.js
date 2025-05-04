@@ -78,7 +78,7 @@ const like = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const slugSong = req.params.slugSong;
         const status = req.params.status;
         const song = yield song_model_1.default.findOne({ slug: slugSong });
-        const newLike = song.like + (status == "like" ? 1 : -1);
+        const newLike = song.like + (status == "add" ? 1 : -1);
         switch (type) {
             case "like":
                 if (status == "add") {
