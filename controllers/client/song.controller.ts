@@ -78,7 +78,7 @@ export const like = async (req: Request, res: Response) => {
 
     const song = await Song.findOne({ slug: slugSong });
 
-    const newLike: number = song.like + (status == "like" ? 1 : -1);
+    const newLike: number = song.like + (status == "add" ? 1 : -1);
 
     switch (type) {
       case "like":
