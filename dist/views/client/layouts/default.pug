@@ -1,0 +1,30 @@
+doctype html 
+html 
+  head 
+    title #{titlePage}
+    link(rel="shortcut icon" href="#")
+    //- APlayer
+    link(rel="stylesheet", href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css")
+    //- Font Awesome
+    link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css")
+    //- TailwindCSS
+    script(src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4") 
+    link(rel="stylesheet", href="/client/css/style.css")
+
+    block style 
+
+  body.flex.flex-col.min-h-screen.bg-gray-900.text-white(class="dark:bg-gray-900")
+    include ../partials/header.pug
+
+    .main.flex-1.p-8
+      .container.m-auto.pt-8
+        block main 
+    
+    block aplayer 
+
+    //- APlayer
+    script(src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js") 
+    script(src="/client/js/script.js") 
+    block script 
+    
+    include ../partials/footer.pug

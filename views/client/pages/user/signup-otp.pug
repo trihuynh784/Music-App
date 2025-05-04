@@ -1,0 +1,31 @@
+extends ../../layouts/auth.pug 
+include ../../mixins/alert.pug
+
+block main 
+  +alert-error()
+
+  section.bg-gray-50(class="dark:bg-gray-900")
+    .flex.flex-col.items-center.justify-center.px-6.mx-auto(class="lg:py-0")
+      a.flex.items-center.mb-6.text-2xl.font-semibold.text-gray-900(
+        class="dark:text-white" 
+        href="#"
+      )
+        i.fa-brands.fa-spotify.w-8.h-8.mr-2.justify-center.items-center(class="flex!")
+        span Spytifort
+      .w-full.bg-white.rounded-lg.shadow(class="dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700")
+        .p-6.space-y-4(class="md:space-y-6 sm:p-8")
+          label.text-xl.font-bold.leading-tight.tracking-tight.text-gray-900(class="md:text-2xl dark:text-white" for="otp") Nhập mã OTP
+          form.space-y-4(
+            action=`/user/signup/otp/${id}`
+            method="POST"
+            class="md:space-y-6"
+          )
+            div.mt-4
+              input#otp.bg-gray-50.border.border-gray-300.text-gray-900.rounded-lg.block.w-full(
+                required="" 
+                placeholder="Mã otp 6 số..." 
+                class="focus:ring-primary-600 focus:border-primary-600 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
+                name="otp" 
+                type="text"
+              )
+            button.w-full.text-white.bg-primary-600.font-medium.rounded-lg.text-sm.px-5.text-center(type='submit' class='hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-primary-300 py-2.5 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800') Gửi ngay

@@ -1,0 +1,12 @@
+extends ../../layouts/default.pug
+include ../../mixins/card.pug
+include ../../mixins/box-head.pug
+
+block main 
+  +box-head(titlePage)
+
+  if user && user.favoritesList
+    .grid.grid-cols-2.gap-4(list-button="")
+      +card-song(songs)
+  else 
+    h1.text-center Không có bài hát yêu thích nào

@@ -1,0 +1,15 @@
+mixin alert-success()
+  if messages.success
+    .fixed.top-4.right-4.z-50
+      .flex.items-start.gap-3.bg-green-600.text-white.px-5.py-3.rounded-xl.shadow-xl.max-w-md.w-full.relative.animate-fade-in(id="flash-msg")
+        i.lucide.lucide-check-circle.text-green-400(class="mt-0.5")
+        span.flex-1 #{messages.success}
+        button.absolute.top-2.right-2.text-zinc-400(class="hover:text-white transition text-sm" aria-label="Đóng" onclick="closeFlashMsg()") ×
+
+mixin alert-error()
+  if messages.error
+    .fixed.top-4.right-4.z-50
+      .flex.items-start.gap-3.bg-red-600.text-white.px-5.py-3.rounded-xl.shadow-xl.max-w-md.w-full.relative.animate-fade-in(id="flash-msg")
+        i.lucide.lucide-alert-triangle.text-white(class="mt-0.5")
+        span.flex-1 #{messages.error}
+        button.absolute.top-2.right-2.text-white(class="hover:text-gray-200 transition text-sm" aria-label="Đóng" onclick="closeFlashMsg()") ×

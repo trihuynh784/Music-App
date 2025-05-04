@@ -1,0 +1,71 @@
+extends ../../layouts/default.pug 
+include ../../mixins/alert.pug
+include ../../mixins/box-search.pug
+include ../../mixins/table-tr.pug
+
+block main 
+  +alert-success()
+  +alert-error()
+
+  .row 
+    .col-12 
+      .card 
+        .card-body
+          .row.mb-2 
+            .col-sm-5
+              a.btn.btn-danger.btn-pink.mb-4(href="#") 
+                i.fa-solid.fa-circle-plus.me-3
+                | Add Product
+            .col-sm-7
+
+          .data-table 
+            +box-search()
+
+          .row 
+            .col-sm-12.table-responsive 
+              table.table.table-centered.w-100(style="width: 780px;")
+                thead.table-light 
+                  +tr-head("topic")
+                
+                tbody 
+                  +tr-body(topics)
+          .row(pagination) 
+            .col-sm-12.col-md-5 
+              if pagination.skip + pagination.limitRecords <= pagination.totalPage
+                .pagination-showing Showing topics #{pagination.skip + 1} to #{pagination.skip + pagination.limitRecords} of #{countRecords}
+              else
+                .pagination-showing Showing topics #{pagination.skip + 1} to #{countRecords} of #{countRecords}
+            .col-sm-12.col-md-7
+              ul.pagination-numbers 
+                if pagination.currentPage-1 == 0
+                  li.pagination-button.page-item.disabled(
+                    button-pagination=pagination.currentPage-1
+                  ) <i class="fa-solid fa-chevron-left"></i>
+                else
+                  li.pagination-button.page-item(
+                    button-pagination=pagination.currentPage-1
+                  ) <i class="fa-solid fa-chevron-left"></i>
+                - for (var i = (pagination.currentPage - 1); i <= (pagination.currentPage + 1); i++)
+                  if i != 0 && i <= pagination.totalPage && i != pagination.currentPage
+                    li.pagination-button.page-item(
+                      button-pagination=i
+                    ) #{i}
+                  if i == pagination.currentPage
+                    li.pagination-button.page-item.active(
+                      button-pagination=i
+                    ) #{i}
+                if (pagination.currentPage+1 > pagination.totalPage)
+                  li.pagination-button.page-item.disabled(
+                    button-pagination=pagination.currentPage+1
+                  ) <i class="fa-solid fa-chevron-right"></i>
+                else
+                  li.pagination-button.page-item(
+                    button-pagination=pagination.currentPage+1
+                  ) <i class="fa-solid fa-chevron-right"></i>
+
+  form(
+    action=""
+    method="POST"
+    path=`/${prefixAdmin}/topics/change-status`
+    form-change-status
+  )

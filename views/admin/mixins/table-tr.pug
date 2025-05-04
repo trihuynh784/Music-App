@@ -1,0 +1,37 @@
+mixin tr-head(type)
+  - const cols = type == "topic" ? ["Topic", "Status", "Added Date", "User Change"] : ["Product", "Category", "Added Date", "Price"]
+
+  tr 
+    th.checkbox(style="width: 42.6px;")
+      .form-check 
+        input.form-check-input(type="checkbox" name="checkAll")
+    each col of cols
+      th
+        .sorting-thead.px-2(role="button") 
+          i.increase.fa-solid.fa-sort-up.bold
+          span #{col} 
+          i.decrease.fa-solid.fa-sort-down
+    th.text-center Customs
+
+mixin tr-body(topics)
+  each topic of topics
+    tr 
+      td
+        .d-flex.align-items-center.justify-content-evenly
+          span.form-check.d-flex.align-items-center.justify-content-center
+            input.form-check-input(type="checkbox" name="checkbox")
+      td 
+        img.rounded.me-3(src=topic.avatar alt=topic.title height=48)
+        p.m-0.d-inline-block.align-middle.font-16 
+          a(href=`/${prefixAdmin}/topics/${topic.slug}`) #{topic.title}
+      td.text-center
+        if topic.status == "active"
+          .badge.text-bg-success.btn-status(button-change-status=topic.slug data-status=topic.status role="button") Active
+        else 
+          .badge.text-bg-danger.btn-status(button-change-status=topic.slug data-status=topic.status role="button") Inactive
+      td 30/04/2025
+      td Le Van A
+      td 
+        .td-buttons.d-flex.align-items-center.justify-content-evenly
+          i.fa-solid.fa-pen-to-square(role="button")
+          i.fa-solid.fa-trash(role="button")
