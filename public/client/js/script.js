@@ -106,12 +106,12 @@ if (buttonsFavorite) {
       fetch(link, option)
         .then((res) => res.json())
         .then((data) => {
+          const url = new URL(window.location.href);
           switch (data.message) {
             case "favorited":
             case "success":
               break;
             case "not login":
-              const url = new URL(window.location.href);
               url.pathname = "/user/login";
               window.location.href = url.href;
               break;
@@ -183,7 +183,7 @@ ap.on("ended", () => {
     .then((data) => {
       if (data.code == 200) {
         const span = listenAttribute.querySelector("span");
-        span.innerHTML = `${data.listen} lượt nghe`
+        span.innerHTML = `${data.listen} lượt nghe`;
       }
     });
 });
