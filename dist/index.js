@@ -66,9 +66,6 @@ app.use(express_1.default.static(`${__dirname}/public`));
 app.locals.prefixAdmin = system_1.systemConfig.prefixAdmin;
 (0, index_route_1.default)(app);
 (0, index_route_2.default)(app);
-app.use((req, res) => {
-    res.status(404).render("client/pages/errors/404");
-});
 app.listen(port, () => {
     console.log("App listening on port", port);
 });

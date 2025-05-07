@@ -31,10 +31,7 @@ block main
                   +tr-body(topics)
           .row(pagination) 
             .col-sm-12.col-md-5 
-              if pagination.skip + pagination.limitRecords <= pagination.totalPage
-                .pagination-showing Showing topics #{pagination.skip + 1} to #{pagination.skip + pagination.limitRecords} of #{countRecords}
-              else
-                .pagination-showing Showing topics #{pagination.skip + 1} to #{countRecords} of #{countRecords}
+              .pagination-showing Showing topics #{pagination.skip + 1} to #{pagination.skip + pagination.countRecords} of #{countRecords}
             .col-sm-12.col-md-7
               ul.pagination-numbers 
                 if pagination.currentPage-1 == 0
@@ -62,6 +59,13 @@ block main
                   li.pagination-button.page-item(
                     button-pagination=pagination.currentPage+1
                   ) <i class="fa-solid fa-chevron-right"></i>
+
+  form(
+    action=""
+    method="POST"
+    path=`/${prefixAdmin}/topics/delete`
+    form-delete
+  )
 
   form(
     action=""

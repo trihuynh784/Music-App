@@ -10,10 +10,16 @@ const topicSchema = new mongoose_1.default.Schema({
     avatar: String,
     status: String,
     slug: String,
+    createdAt: {
+        type: Date,
+        default: Date.now(),
+    },
     deleted: {
         type: Boolean,
         default: false,
     },
+}, {
+    timestamps: true,
 });
 const Topic = mongoose_1.default.model("Topic", topicSchema, "topics");
 exports.default = Topic;

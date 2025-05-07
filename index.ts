@@ -51,9 +51,9 @@ app.locals.prefixAdmin = systemConfig.prefixAdmin;
 // Client Routes
 clientRoute(app);
 adminRoute(app);
-app.use((req: Request, res: Response) => {
-  res.status(404).render("client/pages/errors/404");
-});
+// app.use((req: Request, res: Response) => {
+//   res.status(404).render("client/pages/errors/404");
+// });
 
 app.listen(port, () => {
   console.log("App listening on port", port);

@@ -95,3 +95,66 @@ if (pagination) {
   });
 }
 // End Pagination
+
+// Delete Record
+const tableExist4 = document.querySelector("table");
+if (tableExist4) {
+  const formDelete = document.querySelector("[form-delete]");
+  const buttonsDelete = tableExist4.querySelectorAll("[button-delete]");
+
+  buttonsDelete.forEach((button) => {
+    button.addEventListener("click", () => {
+      const slugTopic = button.closest("tr").getAttribute("data-topic");
+      const path = formDelete.getAttribute("path");
+
+      formDelete.action = path + `/${slugTopic}?_method=PATCH`;
+      formDelete.submit();
+    });
+  });
+}
+// End Delete Record
+
+function toCamelCase(str) {
+  return str
+    .toLowerCase()
+    .split(/[\s_-]+/)
+    .map((word, index) => {
+      if (index === 0) return word;
+      return word.charAt(0).toUpperCase() + word.slice(1);
+    })
+    .join("");
+}
+
+// Sort
+const tableExist5 = document.querySelector("table");
+if (tableExist5) {
+  const sorts = tableExist5.querySelectorAll("[button-sort]");
+  sorts.forEach((sortItem) => {
+    sortItem.addEventListener("click", () => {
+      const element = sortItem.querySelector("i.bold");
+      const sortKey = toCamelCase(sortItem.getAttribute("sortKey"));
+      const sortValue = element.getAttribute("sortValue");
+
+      const url = new URL(window.location.href);
+      url.searchParams.set(sortKey, sortValue);
+      window.location.href = url.href;
+    });
+  });
+}
+// End Sort
+
+// Data Table Length
+const dataTableLength = document.querySelector("[data-table-length]");
+if (dataTableLength) {
+  const selectLength = dataTableLength.querySelector("select");
+
+  selectLength.addEventListener("change", () => {
+    const url = new URL(window.location.href);
+
+    url.searchParams.set("limit", selectLength.value);
+
+    window.location.href = url.href;
+  });
+}
+
+// End Data Table Length

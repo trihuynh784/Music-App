@@ -1,13 +1,15 @@
 mixin box-search()
   .row.mb-2
     .col-sm-6
-      .data-table-length
+      .data-table-length(data-table-length="")
         label.form-label.d-flex.gap-2.align-items-center
           | Display 
           select.form-select.form-select-sm
-            option(value=5 selected) 5
-            option(value=10) 10
-            option(value=15) 15
+            - for (var i = 5; i <= 15; i += 5)
+              if pagination.limitRecords == i
+                option(value=i selected) #{i}
+              else
+                option(value=i) #{i}
           | products
     .col-sm-6
       form.text-end(id="form-search")

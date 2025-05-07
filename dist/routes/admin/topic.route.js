@@ -41,4 +41,5 @@ const router = express_1.default.Router();
 const controller = __importStar(require("../../controllers/admin/topic.controller"));
 router.get("/", controller.index);
 router.patch("/change-status/:status/:slugTopic", controller.changeStatus);
+router.patch("/delete/:slugTopic", controller.deleteItem);
 exports.default = router;

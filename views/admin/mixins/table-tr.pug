@@ -1,21 +1,29 @@
 mixin tr-head(type)
   - const cols = type == "topic" ? ["Topic", "Status", "Added Date", "User Change"] : ["Product", "Category", "Added Date", "Price"]
+  - const labelToField = {}
+  - labelToField["Topic"] = "title"
+  - labelToField["Status"] = "status"
 
   tr 
     th.checkbox(style="width: 42.6px;")
       .form-check 
         input.form-check-input(type="checkbox" name="checkAll")
     each col of cols
+      - const field = labelToField[col]
+      - const sortVal = sort?.[field]
       th
-        .sorting-thead.px-2(role="button") 
-          i.increase.fa-solid.fa-sort-up.bold
-          span #{col} 
-          i.decrease.fa-solid.fa-sort-down
+        if (col == "Added Date" || col == "User Change")
+          .sorting-thead #{col}
+        else 
+          .sorting-thead.px-2(button-sort="" role="button" sortKey=col) 
+            i.fa-solid.fa-sort-up(class=sortVal == "asc" ? "bold" : "" sortValue="asc")
+            span #{col} 
+            i.fa-solid.fa-sort-down(class=sortVal == "desc" ? "bold" : "" sortValue="desc")
     th.text-center Customs
 
 mixin tr-body(topics)
   each topic of topics
-    tr 
+    tr(data-topic=topic.slug) 
       td
         .d-flex.align-items-center.justify-content-evenly
           span.form-check.d-flex.align-items-center.justify-content-center
@@ -34,4 +42,4 @@ mixin tr-body(topics)
       td 
         .td-buttons.d-flex.align-items-center.justify-content-evenly
           i.fa-solid.fa-pen-to-square(role="button")
-          i.fa-solid.fa-trash(role="button")
+          i.fa-solid.fa-trash(role="button" button-delete)
