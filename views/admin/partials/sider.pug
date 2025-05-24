@@ -7,7 +7,7 @@ sider(tabindex=0)
 
     li.sider-nav-item
       a.sider-nav-link(
-        href="#"
+        href=`/${prefixAdmin}/dashboard`
       )
         i.fa-solid.fa-house
         span Dashboards 
@@ -16,62 +16,55 @@ sider(tabindex=0)
 
     li.sider-nav-item
       a.sider-nav-link.d-flex.align-items-center(
-        href="#"
         data-item="ecommerce"
       )
         i.fa-solid.fa-store
-        span Ecommerce
+        span Quản lý
         span.fa-solid.fa-chevron-right.menu-arrow
       #sidebarEcommerce.collapse
         ul.sider-nav-second-level
           li
-            a(href="#") Products
+            a(href=`/${prefixAdmin}/topics`) Danh sách chủ đề
           li
-            a(href="#") Orders
-          li
-            a(href="#") Customers
-          li
-            a(href="#") Checkout
-          li
-            a(href="#") Sellers
+            a(href=`/${prefixAdmin}/songs`) Danh sách bài hát
 
-    li.sider-nav-item
-      a.sider-nav-link.d-flex.align-items-center(
-        href="#"
-        data-item="email"
-      )
-        i.fa-regular.fa-envelope
-        span Email
-        span.fa-solid.fa-chevron-right.menu-arrow
-      #sidebarEmail.collapse
-        ul.sider-nav-second-level
-          li
-            a(href="#") Inbox
-          li
-            a(href="#") Read Email
+    //- li.sider-nav-item
+    //-   a.sider-nav-link.d-flex.align-items-center(
+    //-     href="#"
+    //-     data-item="email"
+    //-   )
+    //-     i.fa-regular.fa-envelope
+    //-     span Email
+    //-     span.fa-solid.fa-chevron-right.menu-arrow
+    //-   #sidebarEmail.collapse
+    //-     ul.sider-nav-second-level
+    //-       li
+    //-         a(href="#") Inbox
+    //-       li
+    //-         a(href="#") Read Email
 
-    li.sider-nav-item
-      a.sider-nav-link(href="#")
-        i.fa-solid.fa-rss
-        span Social Feed
-    li.sider-nav-title Settings
-    li.sider-nav-item
-      a.sider-nav-link(href="#")
-        i.fa-solid.fa-copy
-        span Generals
-    li.sider-nav-title Components
-    li.sider-nav-item
-      a.sider-nav-link(
-        href="#"
-        data-item="maps"
-      )
-        i.fa-solid.fa-location-dot
-        span Maps
-        span.fa-solid.fa-chevron-right.menu-arrow
-      #sidebarMaps.collapse
-        ul.sider-nav-second-level
-          li
-            a(href="#") Google Maps
-          li
-            a(href="#") Vector Maps
+    //- li.sider-nav-item
+    //-   a.sider-nav-link(href="#")
+    //-     i.fa-solid.fa-rss
+    //-     span Social Feed
+    //- li.sider-nav-title Settings
+    //- li.sider-nav-item
+    //-   a.sider-nav-link(href="#")
+    //-     i.fa-solid.fa-copy
+    //-     span Generals
+    //- li.sider-nav-title Components
+    //- li.sider-nav-item
+    //-   a.sider-nav-link(
+    //-     href="#"
+    //-     data-item="maps"
+    //-   )
+    //-     i.fa-solid.fa-location-dot
+    //-     span Maps
+    //-     span.fa-solid.fa-chevron-right.menu-arrow
+    //-   #sidebarMaps.collapse
+    //-     ul.sider-nav-second-level
+    //-       li
+    //-         a(href="#") Google Maps
+    //-       li
+    //-         a(href="#") Vector Maps
         

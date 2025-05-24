@@ -6,9 +6,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const system_1 = require("../../config/system");
 const dashboard_route_1 = __importDefault(require("./dashboard.route"));
 const topic_route_1 = __importDefault(require("./topic.route"));
+const song_route_1 = __importDefault(require("./song.route"));
 const adminRoute = (app) => {
     const PATH_ADMIN = system_1.systemConfig.prefixAdmin;
     app.use(`/${PATH_ADMIN}/dashboard`, dashboard_route_1.default);
     app.use(`/${PATH_ADMIN}/topics`, topic_route_1.default);
+    app.use(`/${PATH_ADMIN}/songs`, song_route_1.default);
 };
 exports.default = adminRoute;

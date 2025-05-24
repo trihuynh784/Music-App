@@ -43,6 +43,8 @@ const express_flash_1 = __importDefault(require("express-flash"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const express_session_1 = __importDefault(require("express-session"));
 const method_override_1 = __importDefault(require("method-override"));
+const moment_1 = __importDefault(require("moment"));
+const path_1 = __importDefault(require("path"));
 const database = __importStar(require("./config/database"));
 const index_route_1 = __importDefault(require("./routes/client/index.route"));
 const index_route_2 = __importDefault(require("./routes/admin/index.route"));
@@ -62,10 +64,15 @@ app.use((0, express_flash_1.default)());
 database.connect();
 app.set("views", `${__dirname}/views`);
 app.set("view engine", "pug");
+app.use('/tinymce', express_1.default.static(path_1.default.join(__dirname, 'node_modules', 'tinymce')));
 app.use(express_1.default.static(`${__dirname}/public`));
 app.locals.prefixAdmin = system_1.systemConfig.prefixAdmin;
+app.locals.moment = moment_1.default;
 (0, index_route_1.default)(app);
 (0, index_route_2.default)(app);
+app.use((req, res) => {
+    res.status(404).render("client/pages/errors/404");
+});
 app.listen(port, () => {
     console.log("App listening on port", port);
 });

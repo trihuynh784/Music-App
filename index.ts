@@ -5,6 +5,8 @@ import flash from "express-flash";
 import cookieParser from "cookie-parser";
 import session from "express-session";
 import methodOverride  from "method-override";
+import moment from "moment";
+import path from "path";
 import * as database from "./config/database";
 import clientRoute from "./routes/client/index.route";
 import adminRoute from "./routes/admin/index.route";
@@ -42,18 +44,22 @@ database.connect();
 app.set("views", `${__dirname}/views`);
 app.set("view engine", "pug");
 
+/* New Route to the TinyMCE Node module */
+app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce')));
+
 // Set Public Folder
 app.use(express.static(`${__dirname}/public`));
 
-// Set locals for prefixAdmin
+// Set locals variable
 app.locals.prefixAdmin = systemConfig.prefixAdmin;
+app.locals.moment = moment;
 
 // Client Routes
 clientRoute(app);
 adminRoute(app);
-// app.use((req: Request, res: Response) => {
-//   res.status(404).render("client/pages/errors/404");
-// });
+app.use((req: Request, res: Response) => {
+  res.status(404).render("client/pages/errors/404");
+});
 
 app.listen(port, () => {
   console.log("App listening on port", port);

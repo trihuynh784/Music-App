@@ -1,4 +1,6 @@
 import mongoose from "mongoose";
+import slug from "mongoose-slug-updater";
+mongoose.plugin(slug);
 
 const topicSchema = new mongoose.Schema(
   {
@@ -6,11 +8,27 @@ const topicSchema = new mongoose.Schema(
     description: String,
     avatar: String,
     status: String,
-    slug: String,
-    createdAt: {
-      type: Date,
-      default: Date.now(),
+    slug: {
+      type: String,
+      slug: "title",
+      unique: true
     },
+    createdBy: {
+      userId: String,
+      createdAt: {
+        type: Date,
+        default: Date.now(),
+      },
+    },
+    updatedBy: [
+      {
+        userId: String,
+        updatedAt: {
+          type: Date,
+          default: Date.now(),
+        },
+      },
+    ],
     deleted: {
       type: Boolean,
       default: false,

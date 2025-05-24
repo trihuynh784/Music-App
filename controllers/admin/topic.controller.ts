@@ -38,11 +38,12 @@ export const index = async (req: Request, res: Response) => {
       currentPage: 1,
       limitRecords: 5,
     };
-    const countRecords = await Topic.countDocuments(find);
-    objectPagination = pagination(req.query, objectPagination, countRecords);
+    const totalRecords = await Topic.countDocuments(find);
+    objectPagination = pagination(req.query, objectPagination, totalRecords);
 
     // Sort
-    const objectSort: {[key: string]: SortOrder} = sort(req.query);
+    let objectSort: { [key: string]: SortOrder } = { title: "asc"};
+    objectSort = sort(req.query);
     const objectSorted = {};
     objectSorted["title"] = objectSort.title ? objectSort.title : "asc";
     objectSorted["status"] = objectSort.status ? objectSort.status : "asc";
@@ -59,9 +60,9 @@ export const index = async (req: Request, res: Response) => {
       titlePage: "Danh sách chủ đề bài hát",
       topics: topics,
       pagination: objectPagination,
-      countRecords: countRecords,
+      totalRecords: totalRecords,
       keyword: req.query.keyword,
-      sort: objectSorted
+      sort: objectSorted,
     });
   } catch (error) {
     req.flash("error", "Thay đổi trạng thái thất bại!");
@@ -97,5 +98,36 @@ export const deleteItem = async (req: Request, res: Response) => {
   } catch (error) {
     req.flash("error", "Xóa chủ đề thất bại!");
     res.redirect(`/${systemConfig.prefixAdmin}/topics`);
+  }
+};
+
+// [GET] /topics/create
+export const create = async (req: Request, res: Response) => {
+  try {
+    res.render("admin/pages/topic/create", {
+      titlePage: "Tạo mới bài hát",
+    });
+  } catch (error) {
+    res.render("client/pages/errors/404");
+  }
+};
+
+// [GET] /topics/create
+export const createPost = async (req: Request, res: Response) => {
+  try {
+    const dataTopic = {
+      title: req.body.title,
+      description: req.body.description,
+      avatar: req.body.avatar,
+      status: req.body.status,
+    }
+
+    const topic = new Topic(dataTopic);
+    await topic.save();
+
+    req.flash("success", "Tạo mới chủ đề thành công!");
+    res.redirect(`/${systemConfig.prefixAdmin}/topics`);
+  } catch (error) {
+    res.render("client/pages/errors/404");
   }
 };

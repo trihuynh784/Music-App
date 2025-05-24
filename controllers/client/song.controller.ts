@@ -7,39 +7,37 @@ import User from "../../models/user.model";
 
 // [GET] /songs/:slugList
 export const list = async (req: Request, res: Response) => {
-  try {
-    const slug: string = req.params.slug;
+  const slug: string = req.params.slug;
 
-    const topic = await Topic.findOne({
-      slug: slug,
-      status: "active",
-      deleted: false,
-    });
+  const topic = await Topic.findOne({
+    slug: slug,
+    status: "active",
+    deleted: false,
+  });
 
-    const songs = await Song.find({
-      topicId: topic.id,
-      status: "active",
-      deleted: false,
-    });
+  const songs = await Song.find({
+    topicId: topic.id,
+    status: "active",
+    deleted: false,
+  });
 
-    for (const song of songs) {
-      const singer = await Singer.findById(song.singerId);
-      const second = await getDurationFromUrl(song.audio);
-      song["duration"] = formatDuration(second);
-      song["infoSinger"] = singer;
+  for (const song of songs) {
+    if (!song.singerId || !song.audio) continue;
+    const singer = await Singer.findById(song.singerId);
+    const second = await getDurationFromUrl(song.audio);
 
-      if (res.locals.user && res.locals.user.favoritesList.length > 0) {
-        song["liked"] = res.locals.user.favoritesList.includes(song.id);
-      }
+    song["duration"] = formatDuration(second);
+    song["infoSinger"] = singer;
+
+    if (res.locals.user && res.locals.user.favoritesList.length > 0) {
+      song["liked"] = res.locals.user.favoritesList.includes(song.id);
     }
-
-    res.render("client/pages/songs/list", {
-      titlePage: topic.title,
-      songs: songs,
-    });
-  } catch (error) {
-    res.render("client/pages/errors/404");
   }
+
+  res.render("client/pages/songs/list", {
+    titlePage: topic.title,
+    songs: songs,
+  });
 };
 
 // [GET] /songs/detail/:slugSong

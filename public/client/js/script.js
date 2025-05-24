@@ -11,12 +11,14 @@ if (aplayer) {
   ap = new APlayer({
     container: document.getElementById("aplayer"),
     autoplay: true,
+    lrcType: 1,
     audio: [
       {
         name: dataSong.title,
         artist: dataSinger.fullName,
         url: dataSong.audio,
         cover: dataSong.avatar,
+        lrc: dataSong.lyrics
       },
     ],
   });

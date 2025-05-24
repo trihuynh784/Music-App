@@ -104,7 +104,7 @@ if (tableExist4) {
 
   buttonsDelete.forEach((button) => {
     button.addEventListener("click", () => {
-      const slugTopic = button.closest("tr").getAttribute("data-topic");
+      const slugTopic = button.closest("tr").getAttribute("data-record");
       const path = formDelete.getAttribute("path");
 
       formDelete.action = path + `/${slugTopic}?_method=PATCH`;
@@ -156,5 +156,65 @@ if (dataTableLength) {
     window.location.href = url.href;
   });
 }
-
 // End Data Table Length
+
+// Upload Image Preview
+const uploadImage = document.querySelector("[upload-image]");
+if (uploadImage) {
+  const input = uploadImage.querySelector("[upload-image-input]");
+  const changeAvatar = uploadImage.querySelector("[change-avatar]");
+  const preview = uploadImage.querySelector("[upload-image-preview]");
+  const closeBtn = uploadImage.querySelector("[close-image-preview]");
+
+  const togglePreview = (show) => {
+    closeBtn.classList.toggle("d-none", !show);
+  };
+
+  input.addEventListener("change", (e) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      preview.src = URL.createObjectURL(file);
+      togglePreview(true);
+    }
+  });
+
+  closeBtn.addEventListener("click", () => {
+    changeAvatar.value = "delete";
+    preview.src = "";
+    input.value = "";
+    togglePreview(false);
+  });
+
+  if (preview.getAttribute("src") == "") {
+    togglePreview(false);
+  } else {
+    togglePreview(true);
+  }
+}
+// End Upload Image Preview
+
+const uploadAudio = document.querySelector("[upload-audio]");
+if (uploadAudio) {
+  const input = uploadAudio.querySelector("[upload-audio-input]");
+  const preview = uploadAudio.querySelector("[upload-audio-preview]");
+  const source = preview.querySelector("source");
+
+  const togglePreview = (show) => {
+    preview.classList.toggle("d-none", !show);
+  };
+
+  input.addEventListener("change", (e) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      source.src = URL.createObjectURL(file);
+      preview.load();
+      togglePreview(true);
+    }
+  });
+
+  if (source.getAttribute("src") == "") {
+    togglePreview(false);
+  } else {
+    togglePreview(true);
+  }
+}

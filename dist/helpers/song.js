@@ -44,25 +44,33 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.formatDuration = exports.getDurationFromUrl = void 0;
 const music_metadata_1 = require("music-metadata");
+const http = __importStar(require("http"));
 const https = __importStar(require("https"));
 const getDurationFromUrl = (url) => __awaiter(void 0, void 0, void 0, function* () {
     return new Promise((resolve, reject) => {
-        https.get(url, (response) => __awaiter(void 0, void 0, void 0, function* () {
-            var _a;
-            try {
-                const metadata = yield (0, music_metadata_1.parseStream)(response, null, { duration: true });
-                resolve((_a = metadata.format.duration) !== null && _a !== void 0 ? _a : 0);
-            }
-            catch (err) {
-                reject(err);
-            }
-        })).on('error', reject);
+        try {
+            const parsedUrl = new URL(url);
+            const client = parsedUrl.protocol === "https:" ? https : http;
+            client.get(parsedUrl, (response) => __awaiter(void 0, void 0, void 0, function* () {
+                var _a;
+                try {
+                    const metadata = yield (0, music_metadata_1.parseStream)(response, null, { duration: true });
+                    resolve((_a = metadata.format.duration) !== null && _a !== void 0 ? _a : 0);
+                }
+                catch (err) {
+                    reject(err);
+                }
+            })).on("error", reject);
+        }
+        catch (err) {
+            reject(err);
+        }
     });
 });
 exports.getDurationFromUrl = getDurationFromUrl;
 const formatDuration = (seconds) => {
     const mins = Math.floor(seconds / 60);
     const secs = Math.floor(seconds % 60);
-    return `${mins}:${secs.toString().padStart(2, '0')}`;
+    return `${mins}:${secs.toString().padStart(2, "0")}`;
 };
 exports.formatDuration = formatDuration;

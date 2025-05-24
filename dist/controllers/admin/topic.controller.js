@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteItem = exports.changeStatus = exports.index = void 0;
+exports.createPost = exports.create = exports.deleteItem = exports.changeStatus = exports.index = void 0;
 const topic_model_1 = __importDefault(require("../../models/topic.model"));
 const system_1 = require("../../config/system");
 const pagination_1 = require("../../helpers/pagination");
@@ -31,9 +31,10 @@ const index = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             currentPage: 1,
             limitRecords: 5,
         };
-        const countRecords = yield topic_model_1.default.countDocuments(find);
-        objectPagination = (0, pagination_1.pagination)(req.query, objectPagination, countRecords);
-        const objectSort = (0, sort_1.sort)(req.query);
+        const totalRecords = yield topic_model_1.default.countDocuments(find);
+        objectPagination = (0, pagination_1.pagination)(req.query, objectPagination, totalRecords);
+        let objectSort = { title: "asc" };
+        objectSort = (0, sort_1.sort)(req.query);
         const objectSorted = {};
         objectSorted["title"] = objectSort.title ? objectSort.title : "asc";
         objectSorted["status"] = objectSort.status ? objectSort.status : "asc";
@@ -46,9 +47,9 @@ const index = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             titlePage: "Danh sách chủ đề bài hát",
             topics: topics,
             pagination: objectPagination,
-            countRecords: countRecords,
+            totalRecords: totalRecords,
             keyword: req.query.keyword,
-            sort: objectSorted
+            sort: objectSorted,
         });
     }
     catch (error) {
@@ -84,3 +85,32 @@ const deleteItem = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
 });
 exports.deleteItem = deleteItem;
+const create = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        res.render("admin/pages/topic/create", {
+            titlePage: "Tạo mới bài hát",
+        });
+    }
+    catch (error) {
+        res.render("client/pages/errors/404");
+    }
+});
+exports.create = create;
+const createPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const dataTopic = {
+            title: req.body.title,
+            description: req.body.description,
+            avatar: req.body.avatar,
+            status: req.body.status,
+        };
+        const topic = new topic_model_1.default(dataTopic);
+        yield topic.save();
+        req.flash("success", "Tạo mới chủ đề thành công!");
+        res.redirect(`/${system_1.systemConfig.prefixAdmin}/topics`);
+    }
+    catch (error) {
+        res.render("client/pages/errors/404");
+    }
+});
+exports.createPost = createPost;

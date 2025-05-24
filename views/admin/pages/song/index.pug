@@ -1,0 +1,52 @@
+extends ../../layouts/default.pug 
+include ../../mixins/alert.pug
+include ../../mixins/box-search.pug
+include ../../mixins/table-tr.pug
+include ../../mixins/pagination.pug
+
+block main 
+  +alert-success()
+  +alert-error()
+
+  .row 
+    .col-12 
+      .card 
+        .card-body
+          .row.mb-2 
+            .col-sm-5
+              a.btn.btn-danger.btn-pink.mb-4(href=`/${prefixAdmin}/songs/create`) 
+                i.fa-solid.fa-circle-plus.me-3
+                | Add Song
+            .col-sm-7
+
+          .data-table 
+            +box-search("Song")
+
+          .row 
+            .col-sm-12.table-responsive 
+              table.table.table-centered.w-100(style="width: 780px;")
+                thead.table-light 
+                  +tr-head("song")
+                
+                tbody 
+                  +tr-body("songs", songs)
+          .row(pagination) 
+            .col-sm-12.col-md-5 
+              span #{pagination.count}
+              .pagination-showing Showing songs #{pagination.skip + 1} to #{pagination.skip + pagination.countRecords} of #{totalRecords}
+            .col-sm-12.col-md-7
+              +pagination-numbers(pagination)
+
+  form(
+    action=""
+    method="POST"
+    path=`/${prefixAdmin}/songs/delete`
+    form-delete
+  )
+
+  form(
+    action=""
+    method="POST"
+    path=`/${prefixAdmin}/songs/change-status`
+    form-change-status
+  )

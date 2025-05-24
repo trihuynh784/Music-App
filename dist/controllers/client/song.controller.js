@@ -19,35 +19,32 @@ const song_model_1 = __importDefault(require("../../models/song.model"));
 const topic_model_1 = __importDefault(require("../../models/topic.model"));
 const user_model_1 = __importDefault(require("../../models/user.model"));
 const list = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const slug = req.params.slug;
-        const topic = yield topic_model_1.default.findOne({
-            slug: slug,
-            status: "active",
-            deleted: false,
-        });
-        const songs = yield song_model_1.default.find({
-            topicId: topic.id,
-            status: "active",
-            deleted: false,
-        });
-        for (const song of songs) {
-            const singer = yield singer_model_1.default.findById(song.singerId);
-            const second = yield (0, song_1.getDurationFromUrl)(song.audio);
-            song["duration"] = (0, song_1.formatDuration)(second);
-            song["infoSinger"] = singer;
-            if (res.locals.user && res.locals.user.favoritesList.length > 0) {
-                song["liked"] = res.locals.user.favoritesList.includes(song.id);
-            }
+    const slug = req.params.slug;
+    const topic = yield topic_model_1.default.findOne({
+        slug: slug,
+        status: "active",
+        deleted: false,
+    });
+    const songs = yield song_model_1.default.find({
+        topicId: topic.id,
+        status: "active",
+        deleted: false,
+    });
+    for (const song of songs) {
+        if (!song.singerId || !song.audio)
+            continue;
+        const singer = yield singer_model_1.default.findById(song.singerId);
+        const second = yield (0, song_1.getDurationFromUrl)(song.audio);
+        song["duration"] = (0, song_1.formatDuration)(second);
+        song["infoSinger"] = singer;
+        if (res.locals.user && res.locals.user.favoritesList.length > 0) {
+            song["liked"] = res.locals.user.favoritesList.includes(song.id);
         }
-        res.render("client/pages/songs/list", {
-            titlePage: topic.title,
-            songs: songs,
-        });
     }
-    catch (error) {
-        res.render("client/pages/errors/404");
-    }
+    res.render("client/pages/songs/list", {
+        titlePage: topic.title,
+        songs: songs,
+    });
 });
 exports.list = list;
 const songDetail = (req, res) => __awaiter(void 0, void 0, void 0, function* () {

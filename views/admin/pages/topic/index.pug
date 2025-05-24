@@ -2,6 +2,7 @@ extends ../../layouts/default.pug
 include ../../mixins/alert.pug
 include ../../mixins/box-search.pug
 include ../../mixins/table-tr.pug
+include ../../mixins/pagination.pug
 
 block main 
   +alert-success()
@@ -13,13 +14,13 @@ block main
         .card-body
           .row.mb-2 
             .col-sm-5
-              a.btn.btn-danger.btn-pink.mb-4(href="#") 
+              a.btn.btn-danger.btn-pink.mb-4(href=`/${prefixAdmin}/topics/create`) 
                 i.fa-solid.fa-circle-plus.me-3
-                | Add Product
+                | Add Topic
             .col-sm-7
 
           .data-table 
-            +box-search()
+            +box-search("Topic")
 
           .row 
             .col-sm-12.table-responsive 
@@ -28,37 +29,12 @@ block main
                   +tr-head("topic")
                 
                 tbody 
-                  +tr-body(topics)
+                  +tr-body("topics", topics)
           .row(pagination) 
             .col-sm-12.col-md-5 
-              .pagination-showing Showing topics #{pagination.skip + 1} to #{pagination.skip + pagination.countRecords} of #{countRecords}
+              .pagination-showing Showing topics #{pagination.skip + 1} to #{pagination.skip + pagination.countRecords} of #{totalRecords}
             .col-sm-12.col-md-7
-              ul.pagination-numbers 
-                if pagination.currentPage-1 == 0
-                  li.pagination-button.page-item.disabled(
-                    button-pagination=pagination.currentPage-1
-                  ) <i class="fa-solid fa-chevron-left"></i>
-                else
-                  li.pagination-button.page-item(
-                    button-pagination=pagination.currentPage-1
-                  ) <i class="fa-solid fa-chevron-left"></i>
-                - for (var i = (pagination.currentPage - 1); i <= (pagination.currentPage + 1); i++)
-                  if i != 0 && i <= pagination.totalPage && i != pagination.currentPage
-                    li.pagination-button.page-item(
-                      button-pagination=i
-                    ) #{i}
-                  if i == pagination.currentPage
-                    li.pagination-button.page-item.active(
-                      button-pagination=i
-                    ) #{i}
-                if (pagination.currentPage+1 > pagination.totalPage)
-                  li.pagination-button.page-item.disabled(
-                    button-pagination=pagination.currentPage+1
-                  ) <i class="fa-solid fa-chevron-right"></i>
-                else
-                  li.pagination-button.page-item(
-                    button-pagination=pagination.currentPage+1
-                  ) <i class="fa-solid fa-chevron-right"></i>
+              +pagination-numbers(pagination)
 
   form(
     action=""

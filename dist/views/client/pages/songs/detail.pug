@@ -15,7 +15,7 @@ block main
             .flex-1.font-black.capitalize.mt-2.mb-8(class="xl:text-6xl lg:text-5xl md:text-4xl sm:text-3xl xs:text-2xl") #{song.title}
             .singer.flex.items-center
               a(href="#")
-                img(class="w-[32px] h-[32px] rounded-full" src=song.infoSinger.avatar alt=song.infoSinger.fullName)
+                img(class="w-[32px] h-[32px] rounded-full object-cover" src=song.infoSinger.avatar alt=song.infoSinger.fullName)
               i.fa-solid.fa-circle.mx-3.text-white(class="text-[6px]")
               a.singerName.font-semibold(href="#") #{song.infoSinger.fullName}
             

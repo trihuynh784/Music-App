@@ -24,7 +24,24 @@ const songSchema = new mongoose.Schema(
     slug: {
       type: String,
       slug: "title",
+      unique: true
     },
+    createdBy: {
+      userId: String,
+      createdAt: {
+        type: Date,
+        default: Date.now(),
+      },
+    },
+    updatedBy: [
+      {
+        userId: String,
+        updatedAt: {
+          type: Date,
+          default: Date.now(),
+        },
+      },
+    ],
     deleted: {
       type: Boolean,
       default: false,
