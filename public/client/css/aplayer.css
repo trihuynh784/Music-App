@@ -1,0 +1,97 @@
+/* APlayer Custom  */
+.main {
+  margin-bottom: 100px;
+}
+.aplayer {
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  background: black;
+  margin: 0;
+}
+.aplayer .aplayer-pic {
+  border-radius: 5px;
+}
+.aplayer .aplayer-info {
+  padding-top: 0;
+}
+.aplayer-title {
+  margin-top: 10px !important;
+}
+.aplayer-author {
+  margin-top: 5px !important;
+}
+.aplayer .aplayer-music {
+  overflow: visible !important;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 5px;
+}
+.aplayer-controller {
+  width: 50%;
+  position: relative !important;
+  left: 24% !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.aplayer .aplayer-bar {
+  height: 4px !important;
+  overflow: hidden;
+  border-radius: 50px !important;
+}
+.aplayer .aplayer-time {
+  font-size: 13px !important;
+}
+.aplayer .aplayer-icon {
+    width: 20px !important;
+    height: 20px !important;
+}
+.aplayer-volume-bar {
+  bottom: 5px !important;
+  right: 14px !important;
+}
+.aplayer .aplayer-lrc {
+  display: none;
+  max-width: 882px;
+  position: relative;
+  left: 24%;
+  bottom: 5%;
+  height: 30px;
+  text-align: center;
+  overflow: hidden;
+  margin: -10px 0 7px;
+}
+.aplayer .aplayer-lrc:before {
+  background: none;
+}
+.aplayer .aplayer-lrc:after {
+  background: none;
+}
+.aplayer .aplayer-lrc-current {
+  font-size: 16px !important;
+  color: white !important;
+}
+
+@media (max-width: 1279.98px) {
+  .aplayer .aplayer-lrc {
+    max-width: 565px;
+  }
+  .aplayer .aplayer-lrc-current {
+    font-size: 14px !important;
+  }
+}
+
+@media (max-width: 1023.98px) {
+  .aplayer .aplayer-lrc {
+    max-width: 565px;
+  }
+  .aplayer .aplayer-lrc-current {
+    font-size: 12px !important;
+  }
+}
+
+footer {
+  display: none;
+}
+/* End APlayer Custom  */

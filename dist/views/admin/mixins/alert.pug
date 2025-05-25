@@ -1,0 +1,13 @@
+mixin alert-success()
+  if messages.success
+    .flash-container
+      .flash-box.success(id="flash-msg")
+        span.message #{messages.success}
+        button.close-btn(aria-label="Đóng", onclick="closeFlashMsg()") ×
+
+mixin alert-error()
+  if messages.error
+    .flash-container
+      .flash-box.error(id="flash-msg")
+        span.message #{messages.error}
+        button.close-btn(aria-label="Đóng", onclick="closeFlashMsg()") ×

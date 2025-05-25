@@ -1,0 +1,40 @@
+doctype html 
+html 
+  head 
+    title #{titlePage}
+  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Bootstrap -->
+    link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css")
+
+    <!-- Font Awesome -->
+    link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css")
+
+    block style 
+    
+    <!-- Tiny Mce -->
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/7.6.1/tinymce.min.js") 
+    block scriptMce
+
+    <!-- My Css -->
+    link(rel="stylesheet", href="/admin/css/style.css")
+
+  body
+    include ../partials/header.pug
+
+    include ../partials/sider.pug
+
+    main
+      .main-page
+        .main-content
+          block main
+
+        include ../partials/footer.pug
+
+    block script
+    
+    <!-- Config Admin Page -->
+    script(src="/admin/js/config.js") 
+
+    script(src="/admin/js/script.js") 

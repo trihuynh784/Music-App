@@ -1,0 +1,9 @@
+extends ../../layouts/default.pug 
+include ../../mixins/box-head.pug
+include ../../mixins/card.pug
+
+block main 
+  +box-head(titlePage)
+
+  .grid.grid-cols-2.gap-4(list-button="")
+    +card-song(songs)

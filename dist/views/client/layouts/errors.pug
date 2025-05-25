@@ -1,0 +1,17 @@
+doctype html 
+html 
+  head 
+    block title 
+    link(rel="shortcut icon" href="#")
+    
+    //- TailwindCSS
+    script(src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4") 
+    link(rel="stylesheet", href="/client/css/style.css")
+
+  body.flex.flex-col.min-h-screen.text-white
+    .main.flex-1.p-8.flex.justify-center.items-center
+      block main 
+    
+    include ../partials/footer.pug
+
+    block script

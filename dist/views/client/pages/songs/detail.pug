@@ -1,0 +1,55 @@
+extends ../../layouts/default.pug
+include ../../mixins/box-head.pug
+
+block style 
+  link(rel="stylesheet", href="/client/css/aplayer.css")
+
+block main 
+  .flex.mb-4
+    .left.mr-2.rounded-xl.overflow-hidden(class="min-w-[70%]")
+      .flex.flex-col
+        .head.p-1.flex.items-center.bg-neutral-600.px-4.py-6
+          img(class="max-w-[35%] rounded-xl mr-5" src=song.avatar alt=song.title)
+          .infoSong.flex.flex-col
+            .text-md.font-semibold Bài hát 
+            .flex-1.font-black.capitalize.mt-2.mb-8(class="xl:text-6xl lg:text-5xl md:text-4xl sm:text-3xl xs:text-2xl") #{song.title}
+            .singer.flex.items-center
+              a(href="#")
+                img(class="w-[32px] h-[32px] rounded-full object-cover" src=song.infoSinger.avatar alt=song.infoSinger.fullName)
+              i.fa-solid.fa-circle.mx-3.text-white(class="text-[6px]")
+              a.singerName.font-semibold(href="#") #{song.infoSinger.fullName}
+            
+            .mt-22.text-gray-200(listen-song-id=song.slug)
+              i.fa-solid.fa-headphones.w-4.h-4.mr-2 
+              span #{song.listen} lượt nghe
+
+            .flex.mt-2(list-button)
+              if song.liked
+                button.cursor-pointer.flex.items-center.justify-center.text-sm.text-sky-500.emoji-active(class="hover:text-blue-300 transition" button-like=song.slug)
+                  i.fa-regular.fa-thumbs-up.w-4.h-4.mr-1
+                  span #{song.like} Thích
+              else 
+                button.cursor-pointer.flex.items-center.justify-center.text-sm.text-sky-500(class="hover:text-blue-300 transition" button-like=song.slug)
+                  i.fa-regular.fa-thumbs-up.w-4.h-4.mr-1
+                  span #{song.like} Thích
+              if song.favorited
+                button.cursor-pointer.flex.items-end.justify-center.text-sm.ml-6.text-red-500.emoji-active(class="hover:text-red-400 transition" button-favorite=song.slug)
+                  i.fa-regular.fa-heart.w-4.h-4.mr-1
+                  span Thêm vào bộ sưu tập
+              else
+                button.cursor-pointer.flex.items-end.justify-center.text-sm.text-gray-300.ml-6.text-red-500(class="hover:text-red-400 transition" button-favorite=song.slug)
+                  i.fa-regular.fa-heart.w-4.h-4.mr-1
+                  span Thêm vào bộ sưu tập
+
+        .lyrics.px-4.py-6.bg-neutral-800.overflow-y-auto(class="max-h-[700px]")
+          .text-3xl.font-bold Lời bài hát
+          .text-md.font-medium.mt-3.text-gray-300.whitespace-pre !{song.lyrics}
+    .right.bg-stone-900.px-4.py-6.rounded-xl.overflow-y-auto(class="min-w-[30%]")
+      .text-lg.font-semibold Chủ đề: #{song.infoTopic.title}
+      img.songAvatar.my-3.rounded-xl(class="w-full" src=song.avatar alt=song.title)
+      p !{song.description}
+      .text-lg.font-semibold.mt-6 #{song.infoSinger.fullName}
+      img.songAvatar.my-3.rounded-xl(class="w-full" src=song.infoSinger.avatar alt=song.infoSinger.avatar)
+  
+block aplayer
+  div.p-4(id="aplayer" data-song=song data-singer=song.infoSinger)

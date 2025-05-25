@@ -1,0 +1,42 @@
+mixin card-topic(topics)
+  each topic in topics
+    .card.flex.flex-col 
+      img.rounded-lg(src=topic.avatar alt=topic.title)
+      a.text-lg.capitalize.my-2.font-medium(href=`/songs/${topic.slug}` class="hover:text-gray-200") #{topic.title}
+      .text-gray-500.text-sm !{topic.description}
+
+mixin card-song(songs)
+  each song in songs
+    .card.flex.items-center.bg-gray-800.rounded-xl.overflow-hidden
+      a.left.left.mr-4.duration-300.ease-in-out.w-auto.h-full(
+        class="max-w-[35%] hover:scale-105"
+        href=`/songs/detail/${song.slug}`
+      )
+        img.w-auto.h-full.object-cover.aspect-square(
+          src=song.avatar
+          alt=song.title
+        )
+      .right(class="xl:text-xl lg:text-lg md:text-md sm:text-sm")
+        a.name.my-4.capitalize.block.font-bold.truncate(
+          class="hover:underline"
+          href=`/songs/detail/${song.slug}`
+          ) #{song.title}
+        a.singer.text-md.block.my-1(
+          class="hover:underline"
+          href=(song.infoUser ? `/user/detail/${song.infoSinger.slug}` : "")
+        )
+          if song.infoSinger
+            i.fa-solid.fa-signature.mr-2
+            | #{song.infoSinger.fullName}
+        .like.text-md.block.my-1.text-sky-300
+          if song.liked
+            button.cursor-pointer.flex.items-end.justify-center.text-sm.text-red-500.emoji-active(class="hover:text-red-400 transition" button-favorite=song.slug)
+              i.fa-regular.fa-heart.w-4.h-4.mr-2
+              span Yêu thích
+          else
+            button.cursor-pointer.flex.items-end.justify-center.text-sm.text-gray-300.text-red-500(class="hover:text-red-400 transition" button-favorite=song.slug)
+              i.fa-regular.fa-heart.w-4.h-4.mr-2
+              span Yêu thích
+        .time.text-md.block.mb-3
+          i.fa-solid.fa-clock.mr-2
+          | #{song.duration}

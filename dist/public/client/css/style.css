@@ -1,0 +1,114 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+body {
+  font-family: "Poppins", sans-serif;
+}
+
+body .main {
+  a:hover {
+    text-decoration: underline;
+  }
+}
+
+.main .aplayer-title {
+  color: black;
+}
+
+/* Alert  */
+button[onclick="closeFlashMsg()"] {
+  font-size: 25px;
+  position: absolute;
+  top: -10px;
+  right: -5px;
+  width: 22px;
+  height: 22px;
+  background: black;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+/* End Alert  */
+
+/* Emoji Active */
+
+.emoji-active[button-like] i {
+  font-weight: 900;
+  transform: scale(1.2);
+}
+.emoji-active[button-favorite] i {
+  font-weight: 900;
+  transform: scale(1.2);
+}
+/* End Emoji Active */
+
+/* Suggestions Search */
+.suggestions {
+  width: 100%;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  margin-top: 8px;
+  border-radius: 6px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  list-style: none;
+  padding: 0;
+  overflow: hidden;
+  z-index: 100;
+  display: none;
+}
+
+.suggestions li {
+  padding: 10px 16px;
+  cursor: pointer;
+}
+
+.suggestions.show {
+  display: block;
+}
+/* End Suggestions Search */
+
+/* Loading Spinner */
+.loading-container {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  align-items: center;
+  font-family: sans-serif;
+  color: #555;
+  cursor: not-allowed;
+}
+
+.loading-spinner-like {
+  position: absolute;
+  left: 0px;
+  bottom: 0px;
+  width: 18px;
+  height: 18px;
+  color: transparent;
+  border: 4px solid #e0e0e0;
+  border-top: 4px solid #3498db;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.loading-spinner-favorite {
+  position: absolute;
+  left: 0px;
+  bottom: 0px;
+  width: 18px;
+  height: 18px;
+  color: transparent;
+  border: 4px solid #e0e0e0;
+  border-top: 4px solid oklch(63.7% 0.237 25.331);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+/* End Loading Spinner */

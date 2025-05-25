@@ -1,0 +1,46 @@
+header.bg-black.text-white
+  .container.m-auto
+    .flex.m-2.items-center.justify-center(class="lg:text-lg sm:text-xs")
+      a.logo.p-2.text-4xl(href="/topics")
+        i.fa-brands.fa-spotify
+      
+      if user
+        #search.p-2.flex-1.text-white.justify-center.items-center.flex
+          form.left.rounded-full.bg-gray-600.text-1xl.flex.items-center.px-4.py-1.mr-2.relative(class="hover:bg-gray-700", action="/search/result", method="get")
+            i.fa-solid.fa-magnifying-glass.text-2xl
+
+            //- Ô input tìm kiếm
+            if keyword
+              input.m-1.p-1.ml-4.min-w-100.border-r-1.mr-2.outline-none.bg-transparent(type="text", name="keyword", value=keyword, autocomplete="off" class="text-[15px]")
+            else
+              input.m-1.p-1.ml-4.min-w-100.border-r-1.mr-2.outline-none.bg-transparent(type="text", name="keyword", placeholder="Bạn muốn phát nội dung gì?", autocomplete="off" class="text-[15px]")
+
+            //- Danh sách gợi ý (dropdown)
+            ul#suggestions.bg-gray-600(class="suggestions")
+
+            //- Nút submit
+            button.right.bracket.cursor-pointer.m-0.duration-400.ease-in-out(type="submit", class="hover:scale-130")
+              i.fa-solid.fa-right-to-bracket
+
+
+          a.signup.cursor-pointer.rounded-full.flex.justify-center.items-center.text-center.text-red-500(href="/favorite-songs" class="py-[15px] px-[24px] hover:bg-red-200 text-[16px]")
+            i.fa-regular.fa-heart.w-4.h-4.mr-1(class="font-black!")
+            span.flex.whitespace-nowrap Bộ sưu tập
+
+        .isLogin.flex.items-center.font-bold
+          - const nameParts = user.fullName.split(" ")
+          - const lastName = nameParts[nameParts.length - 1];
+          a.signup.cursor-pointer.mr-4.bg-gray-100.text-black.rounded-full.flex.justify-center.items-center.text-center(href="/user/detail" class="py-[15px] px-[24px] hover:bg-gray-200") #{lastName}
+          a.login.cursor-pointer.text-gray-300.flex.justify-center.items-center(href="/user/logout" class="hover:text-gray-100") Đăng xuất
+
+      else
+        .search.p-2.flex-1.text-white.justify-center.items-center.flex
+          .left.rounded-full.bg-gray-600.text-1xl.flex.items-center.px-4.py-1(class="hover:bg-gray-700")
+            i.fa-solid.fa-magnifying-glass.text-2xl
+            input.m-1.p-1.ml-4.min-w-100.outline-none.border-r-1.mr-2(placeholder="Bạn muốn phát nội dung gì?")
+            button.right.bracket.cursor-pointer.m-0.duration-400.ease-in-out(class="hover:scale-130")
+              i.fa-solid.fa-right-to-bracket
+
+        .signup-login.flex.items-center.font-bold
+          a.login.cursor-pointer.text-gray-300.flex.justify-center.items-center(href="/user/signup" class="hover:text-gray-100") Đăng ký
+          a.signup.cursor-pointer.ml-4.bg-gray-100.text-black.rounded-full.flex.justify-center.items-center.text-center(href="/user/login" class="py-[15px] px-[24px] hover:bg-gray-200") Đăng nhập

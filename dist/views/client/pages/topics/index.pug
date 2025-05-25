@@ -1,0 +1,11 @@
+extends ../../layouts/default.pug
+include ../../mixins/card.pug
+include ../../mixins/alert.pug
+
+block main 
+  +alert-success()
+
+  h1.text-4xl.font-bold Danh sách chủ đề:
+
+  .grid.grid-cols-4.m-4.gap-4
+    +card-topic(topics)

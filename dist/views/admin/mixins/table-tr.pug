@@ -1,0 +1,60 @@
+include ./moment.pug
+
+mixin tr-head(type)
+  - var cols = type == "topic" ? ["Tên chủ đề", "Trạng thái", "Ngày tạo", "Cập nhật"] : ["Tên bài hát", "Trạng thái", "Ngày tạo", "Cập nhật"]
+  - var colsName = type == "topic" ? ["title", "status", "createdAt", "updatedBy"] : ["title", "status", "createdAt", "updatedBy"]
+
+  tr 
+    th.checkbox(style="width: 42.6px;")
+      .form-check 
+        input.form-check-input(type="checkbox" name="checkAll")
+    - for (var i = 0; i < cols.length; i++)
+      - var field = colsName[i]
+      - var sortVal = sort?.[field]
+      - var col = cols[i]
+      - var colName = colsName[i]
+      th
+        if (colName == "title")
+          .sorting-thead.px-2(button-sort="" role="button" sortKey=colName) 
+            if sortVal
+              i.fa-solid.fa-sort-up(class=sortVal == "asc" ? "bold" : "" sortValue="asc") 
+              span #{col} 
+              i.fa-solid.fa-sort-down(class=sortVal == "desc" ? "bold" : "" sortValue="desc")
+            else 
+              i.fa-solid.fa-sort-up.bold(sortValue="asc") 
+              span #{col} 
+              i.fa-solid.fa-sort-down(sortValue="desc")
+        else 
+          .sorting-thead #{col}
+    th.text-center Hành động
+
+mixin tr-body(type, records)
+  each record of records
+    tr(data-record=record.slug) 
+      td
+        .d-flex.align-items-center.justify-content-evenly
+          span.form-check.d-flex.align-items-center.justify-content-center
+            input.form-check-input(type="checkbox" name="checkbox")
+      td 
+        img.rounded.me-3.object-fit-cover(src=record.avatar alt=record.title height=48 width=48)
+        p.m-0.d-inline-block.align-middle.font-16 
+          a(href=`/${prefixAdmin}/${type}/${record.slug}`) #{record.title}
+      td.text-center
+        if record.status == "active"
+          .badge.text-bg-success.btn-status(button-change-status=record.slug data-status=record.status role="button") Active
+        else 
+          .badge.text-bg-danger.btn-status(button-change-status=record.slug data-status=record.status role="button") Inactive
+      td 
+        if record.createdBy
+          span Le Van A
+          +formatDateTime(record.createdBy.createdAt)
+      td 
+        - const updatedBy = record.updatedBy.slice(-1)[0]
+        if updatedBy
+          span Le Van A
+          +formatDateTime(updatedBy.updatedAt)
+      td 
+        .td-buttons.d-flex.align-items-center.justify-content-evenly
+          a.text-black(href=`/${prefixAdmin}/songs/edit/${record.slug}`)
+            i.fa-solid.fa-pen-to-square(role="button")
+          i.fa-solid.fa-trash(role="button" button-delete)

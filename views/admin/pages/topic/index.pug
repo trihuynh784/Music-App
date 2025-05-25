@@ -1,0 +1,51 @@
+extends ../../layouts/default.pug 
+include ../../mixins/alert.pug
+include ../../mixins/box-search.pug
+include ../../mixins/table-tr.pug
+include ../../mixins/pagination.pug
+
+block main 
+  +alert-success()
+  +alert-error()
+
+  .row 
+    .col-12 
+      .card 
+        .card-body
+          .row.mb-2 
+            .col-sm-5
+              a.btn.btn-danger.btn-pink.mb-4(href=`/${prefixAdmin}/topics/create`) 
+                i.fa-solid.fa-circle-plus.me-3
+                | Add Topic
+            .col-sm-7
+
+          .data-table 
+            +box-search("Topic")
+
+          .row 
+            .col-sm-12.table-responsive 
+              table.table.table-centered.w-100(style="width: 780px;")
+                thead.table-light 
+                  +tr-head("topic")
+                
+                tbody 
+                  +tr-body("topics", topics)
+          .row(pagination) 
+            .col-sm-12.col-md-5 
+              .pagination-showing Showing topics #{pagination.skip + 1} to #{pagination.skip + pagination.countRecords} of #{totalRecords}
+            .col-sm-12.col-md-7
+              +pagination-numbers(pagination)
+
+  form(
+    action=""
+    method="POST"
+    path=`/${prefixAdmin}/topics/delete`
+    form-delete
+  )
+
+  form(
+    action=""
+    method="POST"
+    path=`/${prefixAdmin}/topics/change-status`
+    form-change-status
+  )
