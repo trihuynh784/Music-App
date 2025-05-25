@@ -24,9 +24,9 @@ const port: number = 3000;
 app.use(methodOverride("_method"));
 
 // parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded());
+app.use(bodyParser.urlencoded({ extended: true, limit: "5mb" }));
 // parse application/json
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: "5mb" }));
 
 // Connect Flash
 app.use(cookieParser("1230askldSDHF1298YFDS"));
