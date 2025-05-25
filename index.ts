@@ -8,8 +8,6 @@ import methodOverride from "method-override";
 import moment from "moment";
 import path from "path";
 import http from "http";
-import { RedisStore } from "connect-redis";
-import redis from "redis";
 import * as database from "./config/database";
 import clientRoute from "./routes/client/index.route";
 import adminRoute from "./routes/admin/index.route";
@@ -31,12 +29,10 @@ app.use(bodyParser.urlencoded({ extended: true, limit: "5mb" }));
 app.use(bodyParser.json({ limit: "5mb" }));
 
 // Connect Flash
-const redisClient = redis.createClient();
 app.use(cookieParser("1230askldSDHF1298YFDS"));
 app.use(
   session({
-    store: new RedisStore({ client: redisClient }),
-    secret: "your-secret-key",
+    secret: "12345aBcDe",
     resave: false,
     saveUninitialized: false,
     cookie: {

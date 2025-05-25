@@ -1,5 +1,4 @@
 mixin box-search(type)
-  - const title = type == "Topic" ? "topics" : "songs"
   .row.mb-2
     .col-sm-6
       .data-table-length(data-table-length="")
@@ -11,7 +10,7 @@ mixin box-search(type)
                 option(value=i selected) #{i}
               else
                 option(value=i) #{i}
-          | #{title}
+          | #{type}
     .col-sm-6
       form.text-end(id="form-search")
         .input-group 

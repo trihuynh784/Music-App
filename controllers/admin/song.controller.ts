@@ -110,22 +110,27 @@ export const create = async (req: Request, res: Response) => {
 
 // [POST] /songs/create
 export const createPost = async (req: Request, res: Response) => {
-  const dataSong = {
-    title: req.body.title,
-    avatar: req.body.avatar[0],
-    description: req.body.description,
-    singerId: req.body.singerId,
-    topicId: req.body.topicId,
-    status: req.body.status,
-    lyrics: req.body.lyrics,
-    audio: req.body.audio[0],
-  };
+  try {
+    const dataSong = {
+      title: req.body.title,
+      avatar: req.body.avatar[0],
+      description: req.body.description,
+      singerId: req.body.singerId,
+      topicId: req.body.topicId,
+      status: req.body.status,
+      lyrics: req.body.lyrics,
+      audio: req.body.audio[0],
+    };
 
-  const song = new Song(dataSong);
-  await song.save();
+    const song = new Song(dataSong);
+    await song.save();
 
-  req.flash("success", "Tạo mới bài hát thành công!");
-  res.redirect(`/${systemConfig.prefixAdmin}/songs`);
+    req.flash("success", "Tạo mới bài hát thành công!");
+    res.redirect(`/${systemConfig.prefixAdmin}/songs`);
+  } catch (error) {
+    req.flash("error", "Tạo mới bài hát thất bại!");
+    res.redirect(`/${systemConfig.prefixAdmin}/songs`);
+  }
 };
 
 // [GET] /songs/detail/:slugSong

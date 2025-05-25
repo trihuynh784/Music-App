@@ -1,8 +1,17 @@
 include ./moment.pug
 
 mixin tr-head(type)
-  - var cols = type == "topic" ? ["Tên chủ đề", "Trạng thái", "Ngày tạo", "Cập nhật"] : ["Tên bài hát", "Trạng thái", "Ngày tạo", "Cập nhật"]
-  - var colsName = type == "topic" ? ["title", "status", "createdAt", "updatedBy"] : ["title", "status", "createdAt", "updatedBy"]
+  - var cols = []
+  - var colsName = []
+  if (type == "topic") 
+    - cols = ["Tên chủ đề", "Trạng thái", "Ngày tạo", "Cập nhật"]
+    - colsName = ["title", "status", "createdAt", "updatedBy"]
+  if (type == "song")
+    - cols = ["Tên bài hát", "Trạng thái", "Ngày tạo", "Cập nhật"]
+    - colsName = ["title", "status", "createdAt", "updatedBy"]
+  if (type == "singer")
+    - cols = ["Tên ca sĩ", "Trạng thái", "Ngày tạo", "Cập nhật"]
+    - colsName = ["fullName", "status", "createdAt", "updatedBy"]
 
   tr 
     th.checkbox(style="width: 42.6px;")
@@ -14,7 +23,7 @@ mixin tr-head(type)
       - var col = cols[i]
       - var colName = colsName[i]
       th
-        if (colName == "title")
+        if (colName == "title" || colName == "fullName")
           .sorting-thead.px-2(button-sort="" role="button" sortKey=colName) 
             if sortVal
               i.fa-solid.fa-sort-up(class=sortVal == "asc" ? "bold" : "" sortValue="asc") 
@@ -36,9 +45,14 @@ mixin tr-body(type, records)
           span.form-check.d-flex.align-items-center.justify-content-center
             input.form-check-input(type="checkbox" name="checkbox")
       td 
-        img.rounded.me-3.object-fit-cover(src=record.avatar alt=record.title height=48 width=48)
-        p.m-0.d-inline-block.align-middle.font-16 
-          a(href=`/${prefixAdmin}/${type}/${record.slug}`) #{record.title}
+        if type == singer
+          img.rounded.me-3.object-fit-cover(src=record.avatar alt=record.fullName height=48 width=48)
+          p.m-0.d-inline-block.align-middle.font-16 
+            a(href=`/${prefixAdmin}/${type}/${record.slug}`) #{record.fullName}
+        else
+          img.rounded.me-3.object-fit-cover(src=record.avatar alt=record.title height=48 width=48)
+          p.m-0.d-inline-block.align-middle.font-16 
+            a(href=`/${prefixAdmin}/${type}/${record.slug}`) #{record.title}
       td.text-center
         if record.status == "active"
           .badge.text-bg-success.btn-status(button-change-status=record.slug data-status=record.status role="button") Active
@@ -49,10 +63,11 @@ mixin tr-body(type, records)
           span Le Van A
           +formatDateTime(record.createdBy.createdAt)
       td 
-        - const updatedBy = record.updatedBy.slice(-1)[0]
-        if updatedBy
-          span Le Van A
-          +formatDateTime(updatedBy.updatedAt)
+        if record.updatedBy
+          - const updatedBy = record.updatedBy.slice(-1)[0]
+          if updatedBy
+            span Le Van A
+            +formatDateTime(updatedBy.updatedAt)
       td 
         .td-buttons.d-flex.align-items-center.justify-content-evenly
           a.text-black(href=`/${prefixAdmin}/songs/edit/${record.slug}`)

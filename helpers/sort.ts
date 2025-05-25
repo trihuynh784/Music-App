@@ -5,6 +5,9 @@ export const sort = (query: Record<string, any>) => {
   if (query.title) {
     objectSort.title = query.title;
   }
+  if (query.fullName) {
+    objectSort.fullName = query.fullName;
+  }
 
   return objectSort;
 };

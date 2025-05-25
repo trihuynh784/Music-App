@@ -114,17 +114,6 @@ if (tableExist4) {
 }
 // End Delete Record
 
-function toCamelCase(str) {
-  return str
-    .toLowerCase()
-    .split(/[\s_-]+/)
-    .map((word, index) => {
-      if (index === 0) return word;
-      return word.charAt(0).toUpperCase() + word.slice(1);
-    })
-    .join("");
-}
-
 // Sort
 const tableExist5 = document.querySelector("table");
 if (tableExist5) {
@@ -132,9 +121,9 @@ if (tableExist5) {
   sorts.forEach((sortItem) => {
     sortItem.addEventListener("click", () => {
       const element = sortItem.querySelector("i.bold");
-      const sortKey = toCamelCase(sortItem.getAttribute("sortKey"));
+      const sortKey = sortItem.getAttribute("sortKey");
       const sortValue = element.getAttribute("sortValue");
-
+      
       const url = new URL(window.location.href);
       url.searchParams.set(sortKey, sortValue);
       window.location.href = url.href;
@@ -173,6 +162,7 @@ if (uploadImage) {
   input.addEventListener("change", (e) => {
     const file = e.target.files?.[0];
     if (file) {
+      changeAvatar.value = "change"
       preview.src = URL.createObjectURL(file);
       togglePreview(true);
     }
