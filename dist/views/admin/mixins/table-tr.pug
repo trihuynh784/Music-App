@@ -45,7 +45,7 @@ mixin tr-body(type, records)
           span.form-check.d-flex.align-items-center.justify-content-center
             input.form-check-input(type="checkbox" name="checkbox")
       td 
-        if type == "singer"
+        if type == "singers"
           img.rounded.me-3.object-fit-cover(src=record.avatar alt=record.fullName height=48 width=48)
           p.m-0.d-inline-block.align-middle.font-16 
             a(href=`/${prefixAdmin}/${type}/${record.slug}`) #{record.fullName}
