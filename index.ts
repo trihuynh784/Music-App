@@ -4,7 +4,7 @@ import bodyParser from "body-parser";
 import flash from "express-flash";
 import cookieParser from "cookie-parser";
 import session from "express-session";
-import methodOverride  from "method-override";
+import methodOverride from "method-override";
 import moment from "moment";
 import path from "path";
 import http from "http";
@@ -21,7 +21,7 @@ const app: Express = express();
 const port: number = 3000;
 
 // override with the X-HTTP-Method-Override header in the request
-app.use(methodOverride('_method'));
+app.use(methodOverride("_method"));
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded());
@@ -33,6 +33,8 @@ app.use(cookieParser("1230askldSDHF1298YFDS"));
 app.use(
   session({
     secret: "keyboard cat",
+    resave: false,
+    saveUninitialized: false,
     cookie: { maxAge: 60000 },
   })
 );
@@ -46,7 +48,10 @@ app.set("views", `${__dirname}/views`);
 app.set("view engine", "pug");
 
 /* New Route to the TinyMCE Node module */
-app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce')));
+app.use(
+  "/tinymce",
+  express.static(path.join(__dirname, "node_modules", "tinymce"))
+);
 
 // Set Public Folder
 app.use(express.static(`${__dirname}/public`));
