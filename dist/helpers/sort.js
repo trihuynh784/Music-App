@@ -6,6 +6,9 @@ const sort = (query) => {
     if (query.title) {
         objectSort.title = query.title;
     }
+    if (query.fullName) {
+        objectSort.fullName = query.fullName;
+    }
     return objectSort;
 };
 exports.sort = sort;

@@ -53,19 +53,24 @@ const system_1 = require("./config/system");
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 const port = 3000;
-app.use((0, method_override_1.default)('_method'));
-app.use(body_parser_1.default.urlencoded());
-app.use(body_parser_1.default.json());
+app.use((0, method_override_1.default)("_method"));
+app.use(body_parser_1.default.urlencoded({ extended: true, limit: "5mb" }));
+app.use(body_parser_1.default.json({ limit: "5mb" }));
 app.use((0, cookie_parser_1.default)("1230askldSDHF1298YFDS"));
 app.use((0, express_session_1.default)({
-    secret: "keyboard cat",
-    cookie: { maxAge: 60000 },
+    secret: "12345aBcDe",
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        secure: process.env.NODE_ENV === "production",
+        maxAge: 3600000,
+    },
 }));
 app.use((0, express_flash_1.default)());
 database.connect();
 app.set("views", `${__dirname}/views`);
 app.set("view engine", "pug");
-app.use('/tinymce', express_1.default.static(path_1.default.join(__dirname, 'node_modules', 'tinymce')));
+app.use("/tinymce", express_1.default.static(path_1.default.join(__dirname, "node_modules", "tinymce")));
 app.use(express_1.default.static(`${__dirname}/public`));
 app.locals.prefixAdmin = system_1.systemConfig.prefixAdmin;
 app.locals.moment = moment_1.default;

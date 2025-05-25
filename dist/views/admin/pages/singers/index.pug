@@ -14,39 +14,39 @@ block main
         .card-body
           .row.mb-2 
             .col-sm-5
-              a.btn.btn-danger.btn-pink.mb-4(href=`/${prefixAdmin}/songs/create`) 
+              a.btn.btn-danger.btn-pink.mb-4(href=`/${prefixAdmin}/singers/create`) 
                 i.fa-solid.fa-circle-plus.me-3
-                | Add Song
+                | Add Singer
             .col-sm-7
 
           .data-table 
-            +box-search("songs")
+            +box-search("singers")
 
           .row 
             .col-sm-12.table-responsive 
               table.table.table-centered.w-100(style="width: 780px;")
                 thead.table-light 
-                  +tr-head("song")
+                  +tr-head("singer")
                 
                 tbody 
-                  +tr-body("songs", songs)
+                  +tr-body("singers", singers)
           .row(pagination) 
             .col-sm-12.col-md-5 
               span #{pagination.count}
-              .pagination-showing Showing songs #{pagination.skip + 1} to #{pagination.skip + pagination.countRecords} of #{totalRecords}
+              .pagination-showing Showing singers #{pagination.skip + 1} to #{pagination.skip + pagination.countRecords} of #{totalRecords}
             .col-sm-12.col-md-7
               +pagination-numbers(pagination)
 
   form(
     action=""
     method="POST"
-    path=`/${prefixAdmin}/songs/delete`
+    path=`/${prefixAdmin}/singers/delete`
     form-delete
   )
 
   form(
     action=""
     method="POST"
-    path=`/${prefixAdmin}/songs/change-status`
+    path=`/${prefixAdmin}/singers/change-status`
     form-change-status
   )

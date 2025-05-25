@@ -91,20 +91,26 @@ const create = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.create = create;
 const createPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const dataSong = {
-        title: req.body.title,
-        avatar: req.body.avatar[0],
-        description: req.body.description,
-        singerId: req.body.singerId,
-        topicId: req.body.topicId,
-        status: req.body.status,
-        lyrics: req.body.lyrics,
-        audio: req.body.audio[0],
-    };
-    const song = new song_model_1.default(dataSong);
-    yield song.save();
-    req.flash("success", "Tạo mới bài hát thành công!");
-    res.redirect(`/${system_1.systemConfig.prefixAdmin}/songs`);
+    try {
+        const dataSong = {
+            title: req.body.title,
+            avatar: req.body.avatar[0],
+            description: req.body.description,
+            singerId: req.body.singerId,
+            topicId: req.body.topicId,
+            status: req.body.status,
+            lyrics: req.body.lyrics,
+            audio: req.body.audio[0],
+        };
+        const song = new song_model_1.default(dataSong);
+        yield song.save();
+        req.flash("success", "Tạo mới bài hát thành công!");
+        res.redirect(`/${system_1.systemConfig.prefixAdmin}/songs`);
+    }
+    catch (error) {
+        req.flash("error", "Tạo mới bài hát thất bại!");
+        res.redirect(`/${system_1.systemConfig.prefixAdmin}/songs`);
+    }
 });
 exports.createPost = createPost;
 const edit = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
