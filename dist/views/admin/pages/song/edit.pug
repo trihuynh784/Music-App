@@ -5,103 +5,104 @@ block scriptMce
   script(src="/admin/js/tinymce.js") 
 
 block main 
-  +alert-success()
-  +alert-error()
+  if (role.permissions.includes("song_edit"))
+    +alert-success()
+    +alert-error()
 
-  if song.slug
-    form(
-      action=`/${prefixAdmin}/songs/edit/${song.slug}?_method=PATCH`
-      method="POST"
-      enctype="multipart/form-data"
-    )
-      .card 
-        h1.m-5.mb-0 Thêm mới bài hát
-        .card-body 
-          .form-group.my-4
-            label.card-title(for="title") Tiêu đề
-            input.form-control.d-block(id="title" name="title" value=song.title required)
+    if song.slug
+      form(
+        action=`/${prefixAdmin}/songs/edit/${song.slug}?_method=PATCH`
+        method="POST"
+        enctype="multipart/form-data"
+      )
+        .card 
+          h1.m-5.mb-0 Thêm mới bài hát
+          .card-body 
+            .form-group.my-4
+              label.card-title(for="title") Tiêu đề
+              input.form-control.d-block(id="title" name="title" value=song.title required)
 
-          .form-group.my-4(upload-image)
-            label.card-title.d-block Ảnh
-            input(
-              name="avatar"
-              id="avatar"
-              type='file' 
-              accept='image/*' 
-              class="d-none"
-              upload-image-input
-            )
-            input(
-              name="changeAvatar"
-              value="noChange"
-              type="text"
-              class="d-none"
-              change-avatar
-            )
-            label(for="avatar" class="d-block btn btn-primary mt-2") Chọn ảnh cho chủ đề
-            .image-wrapper.position-relative
-              img.image-preview(
-                src=song.avatar
-                upload-image-preview
+            .form-group.my-4(upload-image)
+              label.card-title.d-block Ảnh
+              input(
+                name="avatar"
+                id="avatar"
+                type='file' 
+                accept='image/*' 
+                class="d-none"
+                upload-image-input
               )
-              button.btn-close-image.d-none(type="button" close-image-preview) <i class="fa-solid fa-xmark"></i>
-            
-          .form-group.my-4(upload-audio)
-            label.card-title.d-block Audio
-            input(
-              name="audio"
-              id="audio"
-              type='file' 
-              accept='audio/*' 
-              class="d-none"
-              upload-audio-input
-            )
-            label(for="audio" class="d-block btn btn-primary mt-2") File audio
-            audio.mt-4(
-              controls
-              upload-audio-preview
-              class="d-none"
-            )
-              source(src=song.audio)
+              input(
+                name="changeAvatar"
+                value="noChange"
+                type="text"
+                class="d-none"
+                change-avatar
+              )
+              label(for="avatar" class="d-block btn btn-primary mt-2") Chọn ảnh cho chủ đề
+              .image-wrapper.position-relative
+                img.image-preview(
+                  src=song.avatar
+                  upload-image-preview
+                )
+                button.btn-close-image.d-none(type="button" close-image-preview) <i class="fa-solid fa-xmark"></i>
+              
+            .form-group.my-4(upload-audio)
+              label.card-title.d-block Audio
+              input(
+                name="audio"
+                id="audio"
+                type='file' 
+                accept='audio/*' 
+                class="d-none"
+                upload-audio-input
+              )
+              label(for="audio" class="d-block btn btn-primary mt-2") File audio
+              audio.mt-4(
+                controls
+                upload-audio-preview
+                class="d-none"
+              )
+                source(src=song.audio)
 
-          .form-group.my-4 
-            label.card-title Chủ đề
-            select.form-select.form-select-md(name="topicId")
-              option(value="" disabled) --- Chọn chủ đề ---
-              each topic of topics
-                if song.topicId == topic.id
-                  option(value=topic.id selected) #{topic.title}
-                else
-                  option(value=topic.id) #{topic.title}
+            .form-group.my-4 
+              label.card-title Chủ đề
+              select.form-select.form-select-md(name="topicId")
+                option(value="" disabled) --- Chọn chủ đề ---
+                each topic of topics
+                  if song.topicId == topic.id
+                    option(value=topic.id selected) #{topic.title}
+                  else
+                    option(value=topic.id) #{topic.title}
+              
+            .form-group.my-4 
+              label.card-title Ca sĩ
+              select.form-select.form-select-md(name="singerId")
+                option(value="" disabled) --- Chọn ca sĩ ---
+                each singer of singers
+                  if song.singerId == singer.id
+                    option(value=singer.id selected) #{singer.fullName}
+                  else
+                    option(value=singer.id) #{singer.fullName}
             
-          .form-group.my-4 
-            label.card-title Ca sĩ
-            select.form-select.form-select-md(name="singerId")
-              option(value="" disabled) --- Chọn ca sĩ ---
-              each singer of singers
-                if song.singerId == singer.id
-                  option(value=singer.id selected) #{singer.fullName}
+            .form-group.my-4 
+              label.card-title(for="lyrics") Lời bài hát 
+              textarea.form-control(rows=10 id="lyrics" name="lyrics") #{song.lyrics}
+            .form-group.my-4
+              label.card-title(for="description") Mô tả
+              textarea.textarea-mce(id="description" name="description") #{song.description}
+            .form-group.my-4
+              .form-group.form-check.form-check-inline
+                if song.status == "active"
+                  input.form-check-input(type="radio" id="active" name="status" value="active" checked) 
                 else
-                  option(value=singer.id) #{singer.fullName}
-          
-          .form-group.my-4 
-            label.card-title(for="lyrics") Lời bài hát 
-            textarea.form-control(rows=10 id="lyrics" name="lyrics") #{song.lyrics}
-          .form-group.my-4
-            label.card-title(for="description") Mô tả
-            textarea.textarea-mce(id="description" name="description") #{song.description}
-          .form-group.my-4
-            .form-group.form-check.form-check-inline
-              if song.status == "active"
-                input.form-check-input(type="radio" id="active" name="status" value="active" checked) 
-              else
-                input.form-check-input(type="radio" id="active" name="status" value="active") 
-              label.card-title(for="active") Hoạt động
-            .form-group.form-check.form-check-inline
-              if (song.status == "inactive")
-                input.form-check-input(type="radio" id="inactive" name="status" value="inactive" checked) 
-              else
-                input.form-check-input(type="radio" id="inactive" name="status" value="inactive") 
-              label.card-title(for="inactive") Dừng hoạt động
-          .form-group.my-4
-            button.btn.btn-success(type="submit") Cập nhật
+                  input.form-check-input(type="radio" id="active" name="status" value="active") 
+                label.card-title(for="active") Hoạt động
+              .form-group.form-check.form-check-inline
+                if (song.status == "inactive")
+                  input.form-check-input(type="radio" id="inactive" name="status" value="inactive" checked) 
+                else
+                  input.form-check-input(type="radio" id="inactive" name="status" value="inactive") 
+                label.card-title(for="inactive") Dừng hoạt động
+            .form-group.my-4
+              button.btn.btn-success(type="submit") Cập nhật

@@ -40,4 +40,6 @@ router.patch(
   controller.editPatch
 );
 
+router.get("/:slugSong", controller.detail);
+
 export default router;

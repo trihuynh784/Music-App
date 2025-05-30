@@ -5,48 +5,49 @@ include ../../mixins/table-tr.pug
 include ../../mixins/pagination.pug
 
 block main 
-  +alert-success()
-  +alert-error()
+  if (role.permissions.includes("singer_view"))
+    +alert-success()
+    +alert-error()
 
-  .row 
-    .col-12 
-      .card 
-        .card-body
-          .row.mb-2 
-            .col-sm-5
-              a.btn.btn-danger.btn-pink.mb-4(href=`/${prefixAdmin}/singers/create`) 
-                i.fa-solid.fa-circle-plus.me-3
-                | Add Singer
-            .col-sm-7
+    .row 
+      .col-12 
+        .card 
+          .card-body
+            .row.mb-2 
+              .col-sm-5
+                if (role.permissions.includes("singer_create"))
+                  a.btn.btn-danger.btn-pink.mb-4(href=`/${prefixAdmin}/singers/create`) 
+                    i.fa-solid.fa-circle-plus.me-3
+                    | Add Singer
+              .col-sm-7
 
-          .data-table 
-            +box-search("singers")
+            .data-table 
+              +box-search("singers")
 
-          .row 
-            .col-sm-12.table-responsive 
-              table.table.table-centered.w-100(style="width: 780px;")
-                thead.table-light 
-                  +tr-head("singer")
-                
-                tbody 
-                  +tr-body("singers", singers)
-          .row(pagination) 
-            .col-sm-12.col-md-5 
-              span #{pagination.count}
-              .pagination-showing Showing singers #{pagination.skip + 1} to #{pagination.skip + pagination.countRecords} of #{totalRecords}
-            .col-sm-12.col-md-7
-              +pagination-numbers(pagination)
+            .row 
+              .col-sm-12.table-responsive 
+                table.table.table-centered.w-100(style="width: 780px;")
+                  thead.table-light 
+                    +tr-head("singer")
+                  
+                  tbody 
+                    +tr-body("singers", singers)
+            .row(pagination) 
+              .col-sm-12.col-md-5 
+                .pagination-showing Showing singers #{pagination.skip + 1} to #{pagination.skip + pagination.countRecords} of #{totalRecords}
+              .col-sm-12.col-md-7
+                +pagination-numbers(pagination)
 
-  form(
-    action=""
-    method="POST"
-    path=`/${prefixAdmin}/singers/delete`
-    form-delete
-  )
+    form(
+      action=""
+      method="POST"
+      path=`/${prefixAdmin}/singers/delete`
+      form-delete
+    )
 
-  form(
-    action=""
-    method="POST"
-    path=`/${prefixAdmin}/singers/change-status`
-    form-change-status
-  )
+    form(
+      action=""
+      method="POST"
+      path=`/${prefixAdmin}/singers/change-status`
+      form-change-status
+    )

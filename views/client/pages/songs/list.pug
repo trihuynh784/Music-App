@@ -5,5 +5,5 @@ include ../../mixins/card.pug
 block main 
   +box-head(titlePage)
 
-  .grid.grid-cols-2.gap-4(list-button="")
+  .grid.gap-4(class="lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1" list-button="")
     +card-song(songs)

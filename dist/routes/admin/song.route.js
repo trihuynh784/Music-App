@@ -56,4 +56,5 @@ router.patch("/edit/:slugSong", upload.fields([
     { name: "avatar", maxCount: 1 },
     { name: "audio", maxCount: 1 },
 ]), uploadCloud_middleware_1.uploadFields, validate.editPatch, controller.editPatch);
+router.get("/:slugSong", controller.detail);
 exports.default = router;

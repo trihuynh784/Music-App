@@ -48,4 +48,5 @@ router.patch("/change-status/:status/:slugTopic", controller.changeStatus);
 router.patch("/delete/:slugTopic", controller.deleteItem);
 router.get("/create", controller.create);
 router.post("/create", upload.single("avatar"), uploadCloud_middleware_1.uploadSingle, validate.createPost, controller.createPost);
+router.get("/:slugTopic", controller.detail);
 exports.default = router;

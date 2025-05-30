@@ -333,7 +333,8 @@ td {
   display: flex;
   justify-content: flex-end;
 }
-#form-search input, #form-search button {
+#form-search input,
+#form-search button {
   padding: 5px 10px;
 }
 #form-search .input-group {
@@ -501,4 +502,30 @@ tbody [role="button"]:hover {
 
 textarea {
   white-space: pre;
+}
+
+/* Admin Login Page */
+.gradient-custom {
+  /* fallback for old browsers */
+  background: #6a11cb;
+
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: -webkit-linear-gradient(
+    to right,
+    rgba(106, 17, 203, 1),
+    rgba(37, 117, 252, 1)
+  );
+
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: linear-gradient(
+    to right,
+    rgba(106, 17, 203, 1),
+    rgba(37, 117, 252, 1)
+  );
+}
+/* End Admin Login Page */
+.mb-3.row .col-sm-9 img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
 }

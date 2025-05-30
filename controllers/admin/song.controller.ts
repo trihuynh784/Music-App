@@ -183,3 +183,15 @@ export const editPatch = async (req: Request, res: Response) => {
     res.redirect(`/${systemConfig.prefixAdmin}/songs/edit/${slugSong}`);
   }
 };
+
+// [GET] /songs/:slugSong
+export const detail = async (req: Request, res: Response) => {
+  const slugSong = req.params.slugSong;
+
+  const song = await Song.findOne({ slug: slugSong });
+
+  res.render("admin/pages/song/detail", {
+    titlePage: song.title,
+    song: song,
+  });
+};

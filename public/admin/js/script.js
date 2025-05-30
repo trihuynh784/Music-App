@@ -123,7 +123,7 @@ if (tableExist5) {
       const element = sortItem.querySelector("i.bold");
       const sortKey = sortItem.getAttribute("sortKey");
       const sortValue = element.getAttribute("sortValue");
-      
+
       const url = new URL(window.location.href);
       url.searchParams.set(sortKey, sortValue);
       window.location.href = url.href;
@@ -162,7 +162,7 @@ if (uploadImage) {
   input.addEventListener("change", (e) => {
     const file = e.target.files?.[0];
     if (file) {
-      changeAvatar.value = "change"
+      changeAvatar.value = "change";
       preview.src = URL.createObjectURL(file);
       togglePreview(true);
     }

@@ -42,7 +42,7 @@ export const index = async (req: Request, res: Response) => {
     objectPagination = pagination(req.query, objectPagination, totalRecords);
 
     // Sort
-    let objectSort: { [key: string]: SortOrder } = { title: "asc"};
+    let objectSort: { [key: string]: SortOrder } = { title: "asc" };
     objectSort = sort(req.query);
     const objectSorted = {};
     objectSorted["title"] = objectSort.title ? objectSort.title : "asc";
@@ -103,13 +103,9 @@ export const deleteItem = async (req: Request, res: Response) => {
 
 // [GET] /topics/create
 export const create = async (req: Request, res: Response) => {
-  try {
-    res.render("admin/pages/topic/create", {
-      titlePage: "Tạo mới bài hát",
-    });
-  } catch (error) {
-    res.render("client/pages/errors/404");
-  }
+  res.render("admin/pages/topic/create", {
+    titlePage: "Tạo mới bài hát",
+  });
 };
 
 // [GET] /topics/create
@@ -120,7 +116,7 @@ export const createPost = async (req: Request, res: Response) => {
       description: req.body.description,
       avatar: req.body.avatar,
       status: req.body.status,
-    }
+    };
 
     const topic = new Topic(dataTopic);
     await topic.save();
@@ -130,4 +126,16 @@ export const createPost = async (req: Request, res: Response) => {
   } catch (error) {
     res.render("client/pages/errors/404");
   }
+};
+
+// [GET] /topics/:slugTopic
+export const detail = async (req: Request, res: Response) => {
+  const slugTopic = req.params.slugTopic;
+
+  const topic = await Topic.findOne({ slug: slugTopic });
+
+  res.render("admin/pages/topic/detail", {
+    titlePage: "Tạo mới bài hát",
+    topic: topic,
+  });
 };

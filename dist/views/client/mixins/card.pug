@@ -16,7 +16,7 @@ mixin card-song(songs)
           src=song.avatar
           alt=song.title
         )
-      .right(class="xl:text-xl lg:text-lg md:text-md sm:text-sm")
+      .right(class="xl:text-xl lg:text-lg md:text-xl sm:text-sm")
         a.name.my-4.capitalize.block.font-bold.truncate(
           class="hover:underline"
           href=`/songs/detail/${song.slug}`

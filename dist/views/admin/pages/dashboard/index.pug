@@ -1,5 +1,9 @@
-extends ../../layouts/default.pug 
+extends ../../layouts/default.pug
+include ../../mixins/alert.pug 
 
 block main 
+  +alert-success()
+  +alert-error()
+
   div Dashboard
 

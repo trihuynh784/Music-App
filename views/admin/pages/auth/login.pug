@@ -1,0 +1,27 @@
+extends ../../layouts/auth.pug 
+include ../../mixins/alert.pug
+
+block main 
+  +alert-success()
+  +alert-error()
+
+  section.vh-100.gradient-custom
+    .container.py-5.h-100
+      .row.d-flex.justify-content-center.align-items-center.h-100
+        .col-12.col-md-8.col-lg-6.col-xl-5
+          .card.bg-dark.text-white(style="border-radius: 1rem;")
+            .card-body.p-5.text-center
+              form.mt-md-4.pb-5(
+                action=`/${prefixAdmin}`
+                method="POST"
+              )
+                h2.fw-bold.mb-5.text-uppercase Login
+                .form-outline.form-white.mb-4(data-mdb-input-init="")
+                  input.form-control.form-control-lg(type="email" placeholder="Email" name="email")
+                .form-outline.form-white.mb-4(data-mdb-input-init="")
+                  input.form-control.form-control-lg(type="password" placeholder="Password" name="password")
+                button.btn.btn-outline-light.btn-lg.px-5.mt-5(
+                  type="submit" 
+                  data-mdb-ripple-init="" 
+                  data-mdb-button-init=""
+                  ) Login

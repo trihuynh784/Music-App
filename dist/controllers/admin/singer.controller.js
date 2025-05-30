@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createPost = exports.create = exports.index = void 0;
+exports.detail = exports.createPost = exports.create = exports.index = void 0;
 const singer_model_1 = __importDefault(require("../../models/singer.model"));
 const sort_1 = require("../../helpers/sort");
 const pagination_1 = require("../../helpers/pagination");
@@ -73,3 +73,12 @@ const createPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
 });
 exports.createPost = createPost;
+const detail = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const slugSinger = req.params.slugSinger;
+    const singer = yield singer_model_1.default.findOne({ slug: slugSinger });
+    res.render("admin/pages/singers/detail", {
+        titlePage: singer.fullName,
+        singer: singer,
+    });
+});
+exports.detail = detail;

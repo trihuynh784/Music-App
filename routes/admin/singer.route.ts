@@ -20,4 +20,6 @@ router.post(
   controller.createPost
 );
 
+router.get("/:slugSinger", controller.detail);
+
 export default router;

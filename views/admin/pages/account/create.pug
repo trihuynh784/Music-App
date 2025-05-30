@@ -1,0 +1,42 @@
+extends ../../layouts/default.pug 
+include ../../mixins/alert.pug
+
+block scriptMce
+  script(src="/admin/js/tinymce.js") 
+
+block main 
+  if (role.permissions.includes("account_create"))
+    +alert-success()
+    +alert-error()
+
+    form(
+      action=`/${prefixAdmin}/accounts/create`
+      method="POST"
+    )
+      .card 
+        h1.m-5.mb-0 Thêm mới tài khoản
+        .card-body 
+          .form-group.my-4
+            label.card-title(for="fullName") Họ tên
+            input.form-control.d-block(id="fullName" name="fullName" required)
+          .form-group.my-4
+            label.card-title(for="email") Email
+            input.form-control.d-block(id="email" name="email" required)
+          .form-group.my-4
+            label.card-title(for="password") Mật khẩu
+            input.form-control.d-block(id="password" name="password" type="password" required)
+          .form-group.my-4 
+            label.card-title(for="role") Nhóm quyền 
+            select.form-control(id="role" name="roleId")
+              each role of roles 
+                option(value=role.id) #{role.title}
+          
+          .form-group.my-4
+            .form-group.form-check.form-check-inline
+              input.form-check-input(type="radio" id="active" name="status" value="active" checked) 
+              label.card-title(for="active") Hoạt động
+            .form-group.form-check.form-check-inline
+              input.form-check-input(type="radio" id="inactive" name="status" value="inactive") 
+              label.card-title(for="inactive") Dừng hoạt động
+          .form-group.my-4
+            button.btn.btn-success(type="submit") Tạo ngay

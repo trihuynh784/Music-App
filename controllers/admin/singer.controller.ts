@@ -84,3 +84,15 @@ export const createPost = async (req: Request, res: Response) => {
     res.redirect(`/${systemConfig.prefixAdmin}/singers`);
   }
 };
+
+// [GET] /singers/:slugSinger
+export const detail = async (req: Request, res: Response) => {
+  const slugSinger = req.params.slugSinger;
+
+  const singer = await Singer.findOne({ slug: slugSinger });
+
+  res.render("admin/pages/singers/detail", {
+    titlePage: singer.fullName,
+    singer: singer,
+  });
+};

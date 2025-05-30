@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createPost = exports.create = exports.deleteItem = exports.changeStatus = exports.index = void 0;
+exports.detail = exports.createPost = exports.create = exports.deleteItem = exports.changeStatus = exports.index = void 0;
 const topic_model_1 = __importDefault(require("../../models/topic.model"));
 const system_1 = require("../../config/system");
 const pagination_1 = require("../../helpers/pagination");
@@ -86,14 +86,9 @@ const deleteItem = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
 });
 exports.deleteItem = deleteItem;
 const create = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        res.render("admin/pages/topic/create", {
-            titlePage: "Tạo mới bài hát",
-        });
-    }
-    catch (error) {
-        res.render("client/pages/errors/404");
-    }
+    res.render("admin/pages/topic/create", {
+        titlePage: "Tạo mới bài hát",
+    });
 });
 exports.create = create;
 const createPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -114,3 +109,12 @@ const createPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
 });
 exports.createPost = createPost;
+const detail = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const slugTopic = req.params.slugTopic;
+    const topic = yield topic_model_1.default.findOne({ slug: slugTopic });
+    res.render("admin/pages/topic/detail", {
+        titlePage: "Tạo mới bài hát",
+        topic: topic,
+    });
+});
+exports.detail = detail;

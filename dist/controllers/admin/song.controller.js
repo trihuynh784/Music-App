@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.editPatch = exports.edit = exports.createPost = exports.create = exports.deleteRecord = exports.changeStatus = exports.index = void 0;
+exports.detail = exports.editPatch = exports.edit = exports.createPost = exports.create = exports.deleteRecord = exports.changeStatus = exports.index = void 0;
 const song_model_1 = __importDefault(require("../../models/song.model"));
 const topic_model_1 = __importDefault(require("../../models/topic.model"));
 const pagination_1 = require("../../helpers/pagination");
@@ -156,3 +156,12 @@ const editPatch = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.editPatch = editPatch;
+const detail = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const slugSong = req.params.slugSong;
+    const song = yield song_model_1.default.findOne({ slug: slugSong });
+    res.render("admin/pages/song/detail", {
+        titlePage: song.title,
+        song: song,
+    });
+});
+exports.detail = detail;

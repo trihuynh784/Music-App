@@ -1,0 +1,49 @@
+extends ../../layouts/default.pug 
+include ../../mixins/alert.pug
+include ../../mixins/box-search.pug
+include ../../mixins/table-tr.pug
+include ../../mixins/pagination.pug
+
+block main 
+  if (role.permissions.includes("role_view"))
+    +alert-success()
+    +alert-error()
+
+    .row 
+      .col-12 
+        .card 
+          .card-body
+            .row.mb-2 
+              .col-sm-5
+                if (role.permissions.includes("role_create"))
+                  a.btn.btn-danger.btn-pink.mb-4(href=`/${prefixAdmin}/roles/create`) 
+                    i.fa-solid.fa-circle-plus.me-3
+                    | Add Role
+              .col-sm-7
+
+            .row 
+              .col-sm-12.table-responsive 
+                table.table.table-centered.w-100(style="width: 780px;")
+                  thead.table-light
+                    +tr-head("role")
+                  tbody 
+                    +tr-body("roles", roles)
+            .row(pagination) 
+              .col-sm-12.col-md-5 
+                .pagination-showing Showing singers #{pagination.skip + 1} to #{pagination.skip + pagination.countRecords} of #{totalRecords}
+              .col-sm-12.col-md-7
+                +pagination-numbers(pagination)
+
+    form(
+      action=""
+      method="POST"
+      path=`/${prefixAdmin}/roles/delete`
+      form-delete
+    )
+
+    form(
+      action=""
+      method="POST"
+      path=`/${prefixAdmin}/roles/change-status`
+      form-change-status
+    )

@@ -1,0 +1,42 @@
+extends ../../layouts/default.pug 
+
+block main 
+  if (role.permissions.includes("singer_view"))
+    style.
+      .ratio-1x1 {
+        aspect-ratio: 1/1 !important;
+      }
+
+    .container.py-5
+      .card.shadow
+        .card-header.bg-primary.text-white
+          h4.mb-0 Chi tiết ca sĩ
+        .card-body
+          .row.mb-4
+            .col-md-3.text-center
+              img.img-fluid.ratio-1x1.object-fit-cover.rounded-1.border.shadow(
+                alt=singer.fullName 
+                src=singer.avatar
+                )
+            .col-md-9
+              .mb-3.row
+                label.col-sm-3.col-form-label Họ và tên:
+                .col-sm-9
+                  p.form-control-plaintext #{singer.fullName}
+              .mb-3.row
+                label.col-sm-3.col-form-label Trạng thái:
+                .col-sm-9
+                  if (singer.status == "active")
+                    span.badge.bg-success Hoạt động
+                  else
+                    span.badge.bg-secondary Ẩn
+          .mb-3.row
+            label.col-sm-3.col-form-label Mô tả:
+            .col-sm-9
+              p.form-control-plaintext !{singer.description}
+
+          .text-end
+            a.btn.btn-warning.me-2(href=`/${prefixAdmin}/singers/edit/${singer.slug}`) Chỉnh sửa
+            a.btn.btn-secondary(href=`/${prefixAdmin}/singers`) Quay lại danh sách
+
+    script(src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js")

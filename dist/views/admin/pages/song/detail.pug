@@ -1,0 +1,43 @@
+extends ../../layouts/default.pug 
+
+block main 
+  if (role.permissions.includes("song_view"))
+    style.
+      .ratio-1x1 {
+        aspect-ratio: 1/1 !important;
+      }
+
+    .container.py-5
+      .card.shadow
+        .card-header.bg-primary.text-white
+          h4.mb-0 Chi tiết bài hát
+        .card-body
+          .row.mb-4
+            .col-md-3.text-center
+              img.img-fluid.ratio-1x1.object-fit-cover.rounded-1.border.shadow(
+                alt=song.title
+                src=song.avatar
+                )
+            .col-md-9
+              .mb-3.row
+                label.col-sm-3.col-form-label Tên bài hát:
+                .col-sm-9
+                  p.form-control-plaintext #{song.title}
+              .mb-3.row
+                label.col-sm-3.col-form-label Trạng thái:
+                .col-sm-9
+                  if (song.status == "active")
+                    span.badge.bg-success Hoạt động
+                  else
+                    span.badge.bg-secondary Ẩn
+          .mb-3.row
+            label.col-sm-3.col-form-label Mô tả:
+            .col-sm-9
+              p.form-control-plaintext 
+              | !{song.description}
+
+          .text-end
+            a.btn.btn-warning.me-2(href=`/${prefixAdmin}/songs/edit/${song.slug}`) Chỉnh sửa
+            a.btn.btn-secondary(href=`/${prefixAdmin}/songs`) Quay lại danh sách
+
+    script(src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js")

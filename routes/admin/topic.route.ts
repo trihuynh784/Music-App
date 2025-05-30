@@ -24,4 +24,6 @@ router.post(
   controller.createPost
 );
 
+router.get("/:slugTopic", controller.detail);
+
 export default router;

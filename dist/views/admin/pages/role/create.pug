@@ -1,0 +1,24 @@
+extends ../../layouts/default.pug 
+include ../../mixins/alert.pug
+
+block main 
+  if (role.permissions.includes("role_create"))
+    +alert-success()
+    +alert-error()
+
+    form(
+      action=`/${prefixAdmin}/roles/create`
+      method="POST"
+    )
+      .card 
+        h1.m-5.mb-0 Thêm mới bài hát
+        .card-body 
+          .form-group.my-4
+            label.card-title(for="title") Tiêu đề
+            input.form-control.d-block(id="title" name="title" required)
+              
+          .form-group.my-4
+            label.card-title(for="description") Mô tả
+            textarea.form-control(rows=10 id="description" name="description")
+          .form-group.my-4
+            button.btn.btn-success(type="submit") Tạo ngay

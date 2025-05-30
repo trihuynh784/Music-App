@@ -12,6 +12,12 @@ mixin tr-head(type)
   if (type == "singer")
     - cols = ["Tên ca sĩ", "Trạng thái", "Ngày tạo", "Cập nhật"]
     - colsName = ["fullName", "status", "createdAt", "updatedBy"]
+  if (type == "account")
+    - cols = ["Tên tài khoản", "Trạng thái", "Nhóm quyền"]
+    - colsName = ["fullName", "status", "role"]
+  if (type == "role")
+    - cols = ["Tên nhóm quyền", "Ngày tạo", "Cập nhật"]
+    - colsName = ["title", "createdAt", "updatedBy"]
 
   tr 
     th.checkbox(style="width: 42.6px;")
@@ -23,7 +29,7 @@ mixin tr-head(type)
       - var col = cols[i]
       - var colName = colsName[i]
       th
-        if (colName == "title" || colName == "fullName")
+        if ((colName == "title" || colName == "fullName") && type != "account")
           .sorting-thead.px-2(button-sort="" role="button" sortKey=colName) 
             if sortVal
               i.fa-solid.fa-sort-up(class=sortVal == "asc" ? "bold" : "" sortValue="asc") 
@@ -38,6 +44,7 @@ mixin tr-head(type)
     th.text-center Hành động
 
 mixin tr-body(type, records)
+  - const newType = type.slice(0, -1)
   each record of records
     tr(data-record=record.slug) 
       td
@@ -45,19 +52,30 @@ mixin tr-body(type, records)
           span.form-check.d-flex.align-items-center.justify-content-center
             input.form-check-input(type="checkbox" name="checkbox")
       td 
-        if type == "singers"
+        if (type == "singers")
           img.rounded.me-3.object-fit-cover(src=record.avatar alt=record.fullName height=48 width=48)
           p.m-0.d-inline-block.align-middle.font-16 
             a(href=`/${prefixAdmin}/${type}/${record.slug}`) #{record.fullName}
+        else if (type == "accounts")
+          p.m-0.d-inline-block.align-middle.font-16 
+            a(href=`/${prefixAdmin}/${type}/${record.slug}`) #{record.fullName}
         else
-          img.rounded.me-3.object-fit-cover(src=record.avatar alt=record.title height=48 width=48)
+          if (record.avatar)
+            img.rounded.me-3.object-fit-cover(src=record.avatar alt=record.title height=48 width=48)
           p.m-0.d-inline-block.align-middle.font-16 
             a(href=`/${prefixAdmin}/${type}/${record.slug}`) #{record.title}
-      td.text-center
-        if record.status == "active"
-          .badge.text-bg-success.btn-status(button-change-status=record.slug data-status=record.status role="button") Active
-        else 
-          .badge.text-bg-danger.btn-status(button-change-status=record.slug data-status=record.status role="button") Inactive
+      if (type != "roles")
+        td
+          if (role.permissions.includes(`${newType}_edit`))
+            if record.status == "active"
+              .badge.text-bg-success.btn-status(button-change-status=record.slug data-status=record.status role="button") Active
+            else if record.status == "inactive"
+              .badge.text-bg-danger.btn-status(button-change-status=record.slug data-status=record.status role="button") Inactive
+          else
+            if record.status == "active"
+              .badge.text-bg-success.btn-status(role="button") Active
+            else if record.status == "inactive"
+              .badge.text-bg-danger.btn-status(role="button") Inactive
       td 
         if record.createdBy
           span Le Van A
@@ -69,7 +87,44 @@ mixin tr-body(type, records)
             span Le Van A
             +formatDateTime(updatedBy.updatedAt)
       td 
-        .td-buttons.d-flex.align-items-center.justify-content-evenly
-          a.text-black(href=`/${prefixAdmin}/songs/edit/${record.slug}`)
-            i.fa-solid.fa-pen-to-square(role="button")
-          i.fa-solid.fa-trash(role="button" button-delete)
+        .td-buttons.d-flex.align-items-center.justify-content-center
+          if (role.permissions.includes(`${newType}_edit`))
+            a.text-black(href=`/${prefixAdmin}/${type}/edit/${record.slug}`)
+              i.fa-solid.fa-pen-to-square(role="button")
+          if (role.permissions.includes(`${newType}_delete`))
+            i.fa-solid.fa-trash(role="button" button-delete)
+
+mixin tr-body-account(type, records)
+  each record of records
+    tr(data-record=record.slug) 
+      td
+        .d-flex.align-items-center.justify-content-evenly
+          span.form-check.d-flex.align-items-center.justify-content-center
+            input.form-check-input(type="checkbox" name="checkbox")
+      td 
+        p.m-0.d-inline-block.align-middle.font-16 
+          a(href=`/${prefixAdmin}/${type}/${record.slug}`) #{record.fullName}
+
+      td
+        if (role.permissions.includes(`${newType}_edit`))
+          if record.status == "active"
+            .badge.text-bg-success.btn-status(button-change-status=record.slug data-status=record.status role="button") Active
+          else if record.status == "inactive"
+            .badge.text-bg-danger.btn-status(button-change-status=record.slug data-status=record.status role="button") Inactive
+        else
+          if record.status == "active"
+            .badge.text-bg-success.btn-status(role="button") Active
+          else if record.status == "inactive"
+            .badge.text-bg-danger.btn-status(role="button") Inactive
+
+      td 
+        h6 #{record.infoRole.title}
+
+      td 
+        .td-buttons.d-flex.align-items-center.justify-content-center
+          if (role.permissions.includes(`${newType}_edit`))
+            a.text-black(href=`/${prefixAdmin}/songs/edit/${record.slug}`)
+              i.fa-solid.fa-pen-to-square(role="button")
+          if (role.permissions.includes(`${newType}_delete`))
+            i.fa-solid.fa-trash(role="button" button-delete)
+

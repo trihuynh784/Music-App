@@ -37,9 +37,9 @@ if (sidebarEcommerce) {
   secondLevel(sidebarEcommerce, "#sidebarEcommerce");
 }
 
-const sidebarEmail = document.querySelector('[data-item="email"]');
-if (sidebarEmail) {
-  secondLevel(sidebarEmail, "#sidebarEmail");
+const sidebarAccount = document.querySelector('[data-item="account"]');
+if (sidebarAccount) {
+  secondLevel(sidebarAccount, "#sidebarAccount");
 }
 
 const sidebarMaps = document.querySelector('[data-item="maps"]');

@@ -5,55 +5,56 @@ block scriptMce
   script(src="/admin/js/tinymce.js") 
 
 block main 
-  +alert-success()
-  +alert-error()
+  if (role.permissions.includes("singer_create"))
+    +alert-success()
+    +alert-error()
 
-  form(
-    action=`/${prefixAdmin}/singers/create`
-    method="POST"
-    enctype="multipart/form-data"
-  )
-    .card 
-      h1.m-5.mb-0 Thêm mới bài hát
-      .card-body 
-        .form-group.my-4
-          label.card-title(for="fullName") Tiêu đề
-          input.form-control.d-block(id="fullName" name="fullName" required)
+    form(
+      action=`/${prefixAdmin}/singers/create`
+      method="POST"
+      enctype="multipart/form-data"
+    )
+      .card 
+        h1.m-5.mb-0 Thêm mới bài hát
+        .card-body 
+          .form-group.my-4
+            label.card-title(for="fullName") Tiêu đề
+            input.form-control.d-block(id="fullName" name="fullName" required)
 
-        .form-group.my-4(upload-image)
-          label.card-title.d-block Ảnh
-          input(
-            name="avatar"
-            id="avatar"
-            type='file' 
-            accept='image/*' 
-            class="d-none"
-            upload-image-input
-          )
-          input(
-            name="changeAvatar"
-            value=""
-            type="text"
-            class="d-none"
-            change-avatar
-          )
-          label(for="avatar" class="d-block btn btn-primary mt-2") Chọn ảnh cho chủ đề
-          .image-wrapper.position-relative
-            img.image-preview(
-              src=""
-              upload-image-preview
+          .form-group.my-4(upload-image)
+            label.card-title.d-block Ảnh
+            input(
+              name="avatar"
+              id="avatar"
+              type='file' 
+              accept='image/*' 
+              class="d-none"
+              upload-image-input
             )
-            button.btn-close-image.d-none(type="button" close-image-preview) <i class="fa-solid fa-xmark"></i>
-            
-        .form-group.my-4
-          label.card-title(for="description") Mô tả
-          textarea.textarea-mce(id="description" name="description")
-        .form-group.my-4
-          .form-group.form-check.form-check-inline
-            input.form-check-input(type="radio" id="active" name="status" value="active" checked) 
-            label.card-title(for="active") Hoạt động
-          .form-group.form-check.form-check-inline
-            input.form-check-input(type="radio" id="inactive" name="status" value="inactive") 
-            label.card-title(for="inactive") Dừng hoạt động
-        .form-group.my-4
-          button.btn.btn-success(type="submit") Tạo ngay
+            input(
+              name="changeAvatar"
+              value=""
+              type="text"
+              class="d-none"
+              change-avatar
+            )
+            label(for="avatar" class="d-block btn btn-primary mt-2") Chọn ảnh cho chủ đề
+            .image-wrapper.position-relative
+              img.image-preview(
+                src=""
+                upload-image-preview
+              )
+              button.btn-close-image.d-none(type="button" close-image-preview) <i class="fa-solid fa-xmark"></i>
+              
+          .form-group.my-4
+            label.card-title(for="description") Mô tả
+            textarea.textarea-mce(id="description" name="description")
+          .form-group.my-4
+            .form-group.form-check.form-check-inline
+              input.form-check-input(type="radio" id="active" name="status" value="active" checked) 
+              label.card-title(for="active") Hoạt động
+            .form-group.form-check.form-check-inline
+              input.form-check-input(type="radio" id="inactive" name="status" value="inactive") 
+              label.card-title(for="inactive") Dừng hoạt động
+          .form-group.my-4
+            button.btn.btn-success(type="submit") Tạo ngay

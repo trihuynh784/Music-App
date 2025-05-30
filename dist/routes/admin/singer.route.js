@@ -46,4 +46,5 @@ const uploadCloud_middleware_1 = require("../../middlewares/admin/uploadCloud.mi
 router.get("/", controller.index);
 router.get("/create", controller.create);
 router.post("/create", upload.single("avatar"), uploadCloud_middleware_1.uploadSingle, validate.createPost, controller.createPost);
+router.get("/:slugSinger", controller.detail);
 exports.default = router;
