@@ -30,14 +30,17 @@ const loginPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         if (!account) {
             req.flash("error", "Tài khoản không chính xác!");
             res.redirect(`/${system_1.systemConfig.prefixAdmin}`);
+            return;
         }
         if (account.password != password) {
             req.flash("error", "Mật khẩu không chính xác!");
             res.redirect(`/${system_1.systemConfig.prefixAdmin}`);
+            return;
         }
         if (account.status == "inactive") {
             req.flash("error", "Tài khoản đang bị khóa!");
             res.redirect(`/${system_1.systemConfig.prefixAdmin}`);
+            return;
         }
         res.cookie("tokenAdmin", account.tokenAdmin, {
             expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30),

@@ -20,14 +20,17 @@ export const loginPost = async (req: Request, res: Response) => {
     if (!account) {
       req.flash("error", "Tài khoản không chính xác!");
       res.redirect(`/${systemConfig.prefixAdmin}`);
+      return;
     }
     if (account.password != password) {
       req.flash("error", "Mật khẩu không chính xác!");
       res.redirect(`/${systemConfig.prefixAdmin}`);
+      return;
     }
     if (account.status == "inactive") {
       req.flash("error", "Tài khoản đang bị khóa!");
       res.redirect(`/${systemConfig.prefixAdmin}`);
+      return;
     }
 
     res.cookie("tokenAdmin", account.tokenAdmin, {

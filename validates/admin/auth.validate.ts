@@ -5,10 +5,12 @@ export const loginPost = (req: Request, res: Response, next: NextFunction) => {
   if (!req.body.email) {
     req.flash("error", "Vui lòng nhập Email!");
     res.redirect(`/${systemConfig.prefixAdmin}`);
+    return;
   }
   if (!req.body.password) {
     req.flash("error", "Vui lòng nhập mật khẩu!");
     res.redirect(`/${systemConfig.prefixAdmin}`);
+    return;
   }
 
   next();

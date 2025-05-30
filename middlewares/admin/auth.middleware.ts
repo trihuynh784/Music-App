@@ -17,9 +17,13 @@ export const requireAuth = async (
     if (user) {
       res.locals.user = user;
       res.locals.role = role;
-    } else res.redirect(`/${systemConfig.prefixAdmin}`);
+    } else {
+      res.redirect(`/${systemConfig.prefixAdmin}`);
+      return;
+    }
   } else {
     res.redirect(`/${systemConfig.prefixAdmin}`);
+    return;
   }
 
   next();

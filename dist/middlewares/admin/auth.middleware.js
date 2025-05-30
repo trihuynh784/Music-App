@@ -25,11 +25,14 @@ const requireAuth = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
             res.locals.user = user;
             res.locals.role = role;
         }
-        else
+        else {
             res.redirect(`/${system_1.systemConfig.prefixAdmin}`);
+            return;
+        }
     }
     else {
         res.redirect(`/${system_1.systemConfig.prefixAdmin}`);
+        return;
     }
     next();
 });
