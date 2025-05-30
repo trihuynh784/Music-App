@@ -95,6 +95,7 @@ mixin tr-body(type, records)
             i.fa-solid.fa-trash(role="button" button-delete)
 
 mixin tr-body-account(type, records)
+  - const newType = type.slice(0, -1)
   each record of records
     tr(data-record=record.slug) 
       td
